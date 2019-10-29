@@ -23,7 +23,8 @@ defmodule GlassFactoryApi.MixProject do
     [
       {:httpoison, "~> 1.6"},
       {:jason, "~> 1.1"},
-      {:mock, "~> 0.3.0", only: :test}
+      {:mock, "~> 0.3.0", only: :test},
+      {:ex_doc, "~> 0.21.2", only: :dev}
     ]
   end
 end
