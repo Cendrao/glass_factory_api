@@ -27,3 +27,8 @@ use Mix.Config
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
 #
+
+config :glass_factory_api, GlassFactoryApi.ApiClient,
+  subdomain: "foobar",
+  user_token: "super-secret-token",
+  user_email: "not-so-secret@email.com"
