@@ -26,9 +26,6 @@ use Mix.Config
 # by uncommenting the line below and defining dev.exs, test.exs and such.
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
-#
 
-config :glass_factory_api, GlassFactoryApi.ApiClient,
-  subdomain: "foobar",
-  user_token: "super-secret-token",
-  user_email: "not-so-secret@email.com"
+
+import_config "#{Mix.env()}.exs"

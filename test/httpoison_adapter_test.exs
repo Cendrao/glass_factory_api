@@ -1,6 +1,6 @@
 defmodule GlassFactoryApi.HttpoisonAdapterTest do
   use ExUnit.Case, async: true
-  import Mock
+  import Mox
 
   alias GlassFactoryApi.HttpoisonAdapter
 
@@ -11,21 +11,21 @@ defmodule GlassFactoryApi.HttpoisonAdapterTest do
         body: "{ \"description\": \"some foo json\" }"
       }
 
-      with_mock HTTPoison, get: fn "http://www.foo.bar", [] -> {:ok, request_response} end do
-        assert {:ok, %{status_code: 200, body: body}} =
-                 GlassFactoryApi.HttpoisonAdapter.get("http://www.foo.bar", [])
+      stub(HTTPoison, :get, {:ok, request_response})
 
-        assert body = "{ \"description\": \"some foo json\" }"
-      end
+      assert {:ok, %{status_code: 200, body: body}} =
+               GlassFactoryApi.HttpoisonAdapter.get("http://www.foo.bar", [])
+
+      assert body = "{ \"description\": \"some foo json\" }"
     end
 
     test "returns an error map when request not successed" do
       error_response = %HTTPoison.Error{id: nil, reason: :nxdomain}
 
-      with_mock HTTPoison, get: fn "http://www.foo.bar", [] -> {:error, error_response} end do
-        assert {:error, message} = GlassFactoryApi.HttpoisonAdapter.get("http://www.foo.bar", [])
-        assert message = "nxdomain"
-      end
+      stub(HTTPoison, :get, {:error, error_response})
+
+      assert {:error, message} = GlassFactoryApi.HttpoisonAdapter.get("http://www.foo.bar", [])
+      assert message = "nxdomain"
     end
   end
 end
