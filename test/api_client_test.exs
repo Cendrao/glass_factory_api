@@ -1,9 +1,8 @@
 defmodule GlassFactoryApi.ApiClientTest do
   use ExUnit.Case, async: true
-  import Mock
 
   alias GlassFactoryApi.ApiClient
-  alias GlassFactoryApi.HttpoisonAdapter
+  alias GlassFactoryApi.HttpmockAdapter
 
   describe "get/2" do
     test "returns a map with the requested information" do
@@ -14,22 +13,11 @@ defmodule GlassFactoryApi.ApiClientTest do
         Accept: "application/json"
       ]
 
-      response = %{
-        status_code: 200,
-        body: "{ \"description\": \"some foo json\" }",
-        headers: []
-      }
+      assert {:ok, response} = ApiClient.get("users", HttpmockAdapter)
 
-      with_mock HttpoisonAdapter,
-        get: fn "https://foobar.glassfactory.io/api/public/v1/users", request_header ->
-          {:ok, response}
-        end do
-        assert {:ok, response} = ApiClient.get("users")
-
-        assert %{status_code: 200, body: body, headers: headers} = response
-        assert body == "{ \"description\": \"some foo json\" }"
-        assert headers == []
-      end
+      assert %{status_code: 200, body: body, headers: headers} = response
+      assert body == "{ \"description\": \"some foo json\" }"
+      assert headers == []
     end
   end
 end
