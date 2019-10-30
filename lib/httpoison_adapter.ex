@@ -1,4 +1,7 @@
 defmodule GlassFactoryApi.HttpoisonAdapter do
+  @moduledoc """
+  Adapter to HTTPoison library
+  """
   alias GlassFactoryApi.HttpAdapter
 
   @behaviour HttpAdapter
@@ -8,9 +11,6 @@ defmodule GlassFactoryApi.HttpoisonAdapter do
     case HTTPoison.get(url, headers) do
       {:ok, %HTTPoison.Response{status_code: status_code, body: body, headers: headers}} ->
         {:ok, %{status_code: status_code, body: body, headers: headers}}
-
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        {:error, reason}
     end
   end
 end

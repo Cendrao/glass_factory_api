@@ -6,13 +6,6 @@ defmodule GlassFactoryApi.ApiClientTest do
 
   describe "get/2" do
     test "returns a map with the requested information" do
-      request_header = [
-        "X-Account-Subdomain": "foobar",
-        "X-User-Token": "super-secret-token",
-        "X-User-Email": "not-so-secret@email.com",
-        Accept: "application/json"
-      ]
-
       assert {:ok, response} = ApiClient.get("users", HttpmockAdapter)
 
       assert %{status_code: 200, body: body, headers: headers} = response

@@ -1,31 +1,25 @@
 defmodule GlassFactoryApi.HttpoisonAdapterTest do
   use ExUnit.Case, async: true
-  import Mox
 
   alias GlassFactoryApi.HttpoisonAdapter
 
-  describe "get/2" do
-    test "returns a map with the response" do
-      request_response = %HTTPoison.Response{
-        status_code: 200,
-        body: "{ \"description\": \"some foo json\" }"
-      }
+  setup do
+    bypass = Bypass.open()
+    {:ok, bypass: bypass}
+  end
 
-      stub(HTTPoison, :get, {:ok, request_response})
+  describe "get/2" do
+    test "returns a map with the response", %{bypass: bypass} do
+      Bypass.expect_once(bypass, fn conn ->
+        Plug.Conn.resp(conn, 200, ~s<{{ "description": "some foo json" }}>)
+      end)
 
       assert {:ok, %{status_code: 200, body: body}} =
-               GlassFactoryApi.HttpoisonAdapter.get("http://www.foo.bar", [])
+               HttpoisonAdapter.get(endpoint_url(bypass.port), [])
 
       assert body = "{ \"description\": \"some foo json\" }"
     end
-
-    test "returns an error map when request not successed" do
-      error_response = %HTTPoison.Error{id: nil, reason: :nxdomain}
-
-      stub(HTTPoison, :get, {:error, error_response})
-
-      assert {:error, message} = GlassFactoryApi.HttpoisonAdapter.get("http://www.foo.bar", [])
-      assert message = "nxdomain"
-    end
   end
+
+  defp endpoint_url(port), do: "http://localhost:#{port}/"
 end
