@@ -19,6 +19,21 @@ defmodule GlassFactoryApi.HttpoisonAdapterTest do
 
       assert body = "{ \"description\": \"some foo json\" }"
     end
+
+    test "returns an error when the response is 500", %{bypass: bypass} do
+      Bypass.expect_once(bypass, fn conn ->
+        Plug.Conn.resp(conn, 500, ~s<{{ "internal server error" }}>)
+      end)
+
+      assert {:error, %{status_code: 500, body: body}} =
+               HttpoisonAdapter.get(endpoint_url(bypass.port), [])
+
+      assert body = "internal server error"
+    end
+
+    test "returns an error when the request fails" do
+      assert {:error, :econnrefused} = HttpoisonAdapter.get("www.nonexist.org", [])
+    end
   end
 
   defp endpoint_url(port), do: "http://localhost:#{port}/"
