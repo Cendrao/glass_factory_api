@@ -18,7 +18,7 @@ defmodule GlassFactoryApi.ApiClient do
       {:ok , %{body: "[]", headers: [], status_code: 200}}
   """
   @spec get(String.t()) :: http_response()
-  def get(resource, adapter \\ GlassFactoryApi.HttpoisonAdapter) do
+  def get(resource, adapter \\ GlassFactoryApi.HTTPoisonAdapter) do
     adapter.get(url(resource), headers())
   end
 

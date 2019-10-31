@@ -1,4 +1,4 @@
-defmodule GlassFactoryApi.HttpoisonAdapter do
+defmodule GlassFactoryApi.HTTPoisonAdapter do
   @moduledoc """
   Adapter to HTTPoison library
   """
