@@ -1,8 +1,7 @@
 defmodule GlassFactoryApi.ApiClientTest do
   use ExUnit.Case, async: true
 
-  alias GlassFactoryApi.ApiClient
-  alias GlassFactoryApi.HTTPMockAdapter
+  alias GlassFactoryApi.{ApiClient, HTTPMockAdapter}
 
   describe "get/2" do
     test "returns a map with the requested information" do
