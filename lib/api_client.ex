@@ -16,7 +16,7 @@ defmodule GlassFactoryApi.ApiClient do
   """
 
   @spec get(String.t()) :: http_response()
-  def get(resource, adapter \\ GlassFactoryApi.HTTPoisonAdapter) do
+  def get(resource, adapter \\ GlassFactoryApi.TeslaAdapter) do
     adapter.get(url(resource), headers())
   end
 
