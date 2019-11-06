@@ -1,9 +1,7 @@
 defmodule GlassFactoryApi.ApiClient do
   @moduledoc """
-  Client which make external HTTP Request
+  Client which make external HTTP Request.
   """
-
-  alias GlassFactoryApi.HttpAdapter
 
   @access_info Application.get_env(:glass_factory_api, GlassFactoryApi.ApiClient)
 
@@ -13,10 +11,10 @@ defmodule GlassFactoryApi.ApiClient do
   Make a GET request using the given adapter to retrieve the given resource
 
   ## Examples
-
       iex> GlassFactoryApi.ApiClient.get("members")
       {:ok , %{body: "[]", headers: [], status_code: 200}}
   """
+
   @spec get(String.t()) :: http_response()
   def get(resource, adapter \\ GlassFactoryApi.HTTPoisonAdapter) do
     adapter.get(url(resource), headers())
@@ -32,6 +30,10 @@ defmodule GlassFactoryApi.ApiClient do
   end
 
   defp url(resource) do
-    "https://#{@access_info[:subdomain]}.glassfactory.io/api/public/v1/#{resource}"
+    "#{api_domain()}/api/public/v1/#{resource}"
+  end
+
+  defp api_domain do
+    Application.get_env(:glass_factory_api, GlassFactoryApi.ApiClient)[:api_url]
   end
 end
