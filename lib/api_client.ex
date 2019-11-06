@@ -21,12 +21,12 @@ defmodule GlassFactoryApi.ApiClient do
   end
 
   defp headers do
-    [
-      "X-Account-Subdomain": @access_info[:subdomain],
-      "X-User-Token": @access_info[:user_token],
-      "X-User-Email": @access_info[:user_email],
-      Accept: "application/json"
-    ]
+    %{
+      "X-Account-Subdomain" => @access_info[:subdomain],
+      "X-User-Token" => @access_info[:user_token],
+      "X-User-Email" => @access_info[:user_email],
+      "Accept" => "application/json"
+    }
   end
 
   defp url(resource) do

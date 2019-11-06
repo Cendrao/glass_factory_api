@@ -25,8 +25,8 @@ defmodule GlassFactoryApi.MixProject do
       {:jason, "~> 1.1"},
       {:ex_doc, "~> 0.21.2", only: :dev},
       {:bypass, "~> 1.0", only: :test},
-      {:tesla, "~> 1.3.0"},
-      {:hackney, "~> 1.14.0"}
+      {:tesla, github: "teamon/tesla"},
+      {:mint, "~> 1.0"}
     ]
   end
 

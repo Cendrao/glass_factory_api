@@ -32,7 +32,8 @@ defmodule GlassFactoryApi.TeslaAdapterTest do
     end
 
     test "returns an error when the request fails" do
-      assert {:error, :econnrefused} = TeslaAdapter.get("www.nonexist.org", [])
+      assert {:error, %Mint.TransportError{reason: _}} =
+               TeslaAdapter.get("http://www.nonexist.org", [])
     end
   end
 
