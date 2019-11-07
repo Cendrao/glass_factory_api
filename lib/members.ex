@@ -22,7 +22,7 @@ defmodule GlassFactoryApi.Members do
         }
       ]
   """
-  @spec list_members() :: list(Member.t())
+  @spec list_members(map()) :: list(Member.t())
   def list_members(config \\ %{}) do
     {:ok, %{status: 200, body: body}} = ApiClient.get("members", config)
 
@@ -46,7 +46,7 @@ defmodule GlassFactoryApi.Members do
          joined_at: "2019-01-01"
       }
   """
-  @spec get_member(String.t()) :: Member.t() | nil
+  @spec get_member(String.t(), map()) :: Member.t() | nil
   def get_member(member_id, config \\ %{}) do
     case ApiClient.get("members/#{member_id}", config) do
       {:ok, %{status: 200, body: body}} ->

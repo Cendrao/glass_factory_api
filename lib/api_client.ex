@@ -11,7 +11,7 @@ defmodule GlassFactoryApi.ApiClient do
       iex> GlassFactoryApi.ApiClient.get("members")
       {:ok , %{body: "[]", headers: [], status_code: 200}}
 
-  If no configuration is passed, it will get the default configuration which is defined in `GlassFactoryApi.Configuration.default_configuration`
+  If no configuration is passed, it will look for them in `Configuration.build\\1`
   """
 
   @spec get(String.t(), map()) :: Tesla.Env.t()
@@ -40,6 +40,6 @@ defmodule GlassFactoryApi.ApiClient do
   end
 
   defp url(configuration) do
-    "#{configuration.api_url}/api/public/v1/"
+    "#{configuration[:api_url]}/api/public/v1/"
   end
 end

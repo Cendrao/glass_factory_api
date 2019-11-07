@@ -3,6 +3,12 @@ defmodule GlassFactoryApi.Configuration do
   Defines the GlassFactoryApi configuration settings.
   """
 
+  @doc """
+  Build the configuration keys needed to make requests in GlassFactory public API
+
+  It receives a map and evaluates if the required keys are there for make a request. If a key is missing it will first try to find in Application Variables if still missing it fill try to fetch from Environment variables.
+  """
+  @spec build(map()) :: map()
   def build(opts) do
     access_info = Application.get_env(:glass_factory_api, GlassFactoryApi.ApiClient)
 
