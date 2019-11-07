@@ -23,8 +23,8 @@ defmodule GlassFactoryApi.Members do
       ]
   """
   @spec list_members() :: list(Member.t())
-  def list_members() do
-    {:ok, %{status_code: 200, body: body}} = ApiClient.get("members")
+  def list_members(config \\ nil) do
+    {:ok, %{status_code: 200, body: body}} = ApiClient.get("members", config)
 
     body
     |> Jason.decode!()
@@ -48,8 +48,8 @@ defmodule GlassFactoryApi.Members do
       }
   """
   @spec get_member(String.t()) :: Member.t() | nil
-  def get_member(member_id) do
-    case ApiClient.get("members/#{member_id}") do
+  def get_member(member_id, config \\ nil) do
+    case ApiClient.get("members/#{member_id}", config) do
       {:ok, %{status_code: 200, body: body}} ->
         body
         |> Jason.decode!()

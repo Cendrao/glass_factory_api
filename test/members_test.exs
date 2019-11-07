@@ -7,17 +7,19 @@ defmodule GlassFactoryApi.MembersTest do
   setup do
     bypass = Bypass.open()
 
-    Application.put_env(
-      :glass_factory_api,
-      GlassFactoryApi.ApiClient,
-      api_url: "http://localhost:#{bypass.port}"
-    )
+    config = %GlassFactoryApi.Configuration{
+      subdomain: "foobar",
+      user_token: "super-secret-token",
+      user_email: "not-so-secret@example.org",
+      api_url: "http://localhost:#{bypass.port}",
+      adapter: GlassFactoryApi.TeslaAdapter
+    }
 
-    {:ok, bypass: bypass}
+    {:ok, bypass: bypass, config: config}
   end
 
   describe "list_members/0" do
-    test "returns a list of members", %{bypass: bypass} do
+    test "returns a list of members", %{bypass: bypass, config: config} do
       request_response = GlassFactoryApi.Fixtures.Members.list()
 
       Bypass.expect_once(bypass, fn conn ->
@@ -34,12 +36,12 @@ defmodule GlassFactoryApi.MembersTest do
                  freelancer: false,
                  joined_at: "2019-01-01"
                }
-             ] == Members.list_members()
+             ] == Members.list_members(config)
     end
   end
 
   describe "get_member/1" do
-    test "returns the member of the given id", %{bypass: bypass} do
+    test "returns the member of the given id", %{bypass: bypass, config: config} do
       request_response = GlassFactoryApi.Fixtures.Members.get()
 
       Bypass.expect_once(bypass, fn conn ->
@@ -54,15 +56,15 @@ defmodule GlassFactoryApi.MembersTest do
                email: "john.doe@example.org",
                freelancer: false,
                joined_at: "2019-01-01"
-             } = Members.get_member(2666)
+             } = Members.get_member(2666, config)
     end
 
-    test "returns nil when the id does not exist", %{bypass: bypass} do
+    test "returns nil when the id does not exist", %{bypass: bypass, config: config} do
       Bypass.expect_once(bypass, fn conn ->
         Plug.Conn.resp(conn, 404, "")
       end)
 
-      assert nil == Members.get_member(1)
+      assert nil == Members.get_member(1, config)
     end
   end
 end
