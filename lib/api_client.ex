@@ -14,7 +14,7 @@ defmodule GlassFactoryApi.ApiClient do
       iex> GlassFactoryApi.ApiClient.get("members")
       {:ok , %{body: "[]", headers: [], status_code: 200}}
 
-  If no configuration is passed, it will get the default configuration which is defined in `GlassFacotryApi.Configuration.default_configuration`
+  If no configuration is passed, it will get the default configuration which is defined in `GlassFactoryApi.Configuration.default_configuration`
   """
 
   @spec get(String.t(), GlassFactoryApi.Configuration.t() | nil) :: http_response()
