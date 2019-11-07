@@ -1,7 +1,7 @@
-defmodule GlassFactoryApi.HTTpoisonAdapterTest do
+defmodule GlassFactoryApi.TeslaAdapterTest do
   use ExUnit.Case, async: true
 
-  alias GlassFactoryApi.HTTPoisonAdapter
+  alias GlassFactoryApi.TeslaAdapter
 
   setup do
     bypass = Bypass.open()
@@ -15,7 +15,7 @@ defmodule GlassFactoryApi.HTTpoisonAdapterTest do
       end)
 
       assert {:ok, %{status_code: 200, body: body}} =
-               HTTPoisonAdapter.get(endpoint_url(bypass.port), [])
+               TeslaAdapter.get(endpoint_url(bypass.port), [])
 
       assert body = "{ \"description\": \"some foo json\" }"
     end
@@ -26,13 +26,14 @@ defmodule GlassFactoryApi.HTTpoisonAdapterTest do
       end)
 
       assert {:error, %{status_code: 500, body: body}} =
-               HTTPoisonAdapter.get(endpoint_url(bypass.port), [])
+               TeslaAdapter.get(endpoint_url(bypass.port), [])
 
       assert body = "internal server error"
     end
 
     test "returns an error when the request fails" do
-      assert {:error, :econnrefused} = HTTPoisonAdapter.get("www.nonexist.org", [])
+      assert {:error, %Mint.TransportError{reason: _}} =
+               TeslaAdapter.get("http://www.nonexist.org", [])
     end
   end
 

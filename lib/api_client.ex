@@ -16,17 +16,17 @@ defmodule GlassFactoryApi.ApiClient do
   """
 
   @spec get(String.t()) :: http_response()
-  def get(resource, adapter \\ GlassFactoryApi.HTTPoisonAdapter) do
+  def get(resource, adapter \\ GlassFactoryApi.TeslaAdapter) do
     adapter.get(url(resource), headers())
   end
 
   defp headers do
-    [
-      "X-Account-Subdomain": @access_info[:subdomain],
-      "X-User-Token": @access_info[:user_token],
-      "X-User-Email": @access_info[:user_email],
-      Accept: "application/json"
-    ]
+    %{
+      "X-Account-Subdomain" => @access_info[:subdomain],
+      "X-User-Token" => @access_info[:user_token],
+      "X-User-Email" => @access_info[:user_email],
+      "Accept" => "application/json"
+    }
   end
 
   defp url(resource) do
