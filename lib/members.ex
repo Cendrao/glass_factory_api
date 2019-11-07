@@ -23,11 +23,10 @@ defmodule GlassFactoryApi.Members do
       ]
   """
   @spec list_members() :: list(Member.t())
-  def list_members(config \\ nil) do
-    {:ok, %{status_code: 200, body: body}} = ApiClient.get("members", config)
+  def list_members(config \\ %{}) do
+    {:ok, %{status: 200, body: body}} = ApiClient.get("members", config)
 
     body
-    |> Jason.decode!()
     |> Enum.map(&Member.to_struct(&1))
   end
 
@@ -48,14 +47,13 @@ defmodule GlassFactoryApi.Members do
       }
   """
   @spec get_member(String.t()) :: Member.t() | nil
-  def get_member(member_id, config \\ nil) do
+  def get_member(member_id, config \\ %{}) do
     case ApiClient.get("members/#{member_id}", config) do
-      {:ok, %{status_code: 200, body: body}} ->
+      {:ok, %{status: 200, body: body}} ->
         body
-        |> Jason.decode!()
         |> Member.to_struct()
 
-      {:error, %{status_code: 404}} ->
+      {:ok, %{status: 404}} ->
         nil
     end
   end

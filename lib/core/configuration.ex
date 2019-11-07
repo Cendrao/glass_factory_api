@@ -3,27 +3,21 @@ defmodule GlassFactoryApi.Configuration do
   Defines the GlassFactoryApi configuration settings.
   """
 
-  alias GlassFactoryApi.Configuration
+  def build(opts) do
+    access_info = Application.get_env(:glass_factory_api, GlassFactoryApi.ApiClient)
 
-  @type t() :: %Configuration{
-          subdomain: String.t(),
-          user_token: String.t(),
-          user_email: String.t(),
-          api_url: String.t(),
-          adapter: any()
-        }
-
-  defstruct [:subdomain, :user_token, :user_email, :api_url, :adapter]
-
-  @access_info Application.get_env(:glass_factory_api, GlassFactoryApi.ApiClient)
-
-  def default_configuration do
-    %Configuration{
-      subdomain: @access_info[:subdomain],
-      user_token: @access_info[:user_token],
-      user_email: @access_info[:user_email],
-      api_url: @access_info[:api_url],
-      adapter: GlassFactoryApi.TeslaAdapter
-    }
+    opts
+    |> Map.put_new_lazy(:subdomain, fn ->
+      access_info[:user_token] || System.fetch_env!("GLASSFACTORY_SUBDOMAIN")
+    end)
+    |> Map.put_new_lazy(:user_token, fn ->
+      access_info[:user_token] || System.fetch_env!("GLASSFACTORY_USER_TOKEN")
+    end)
+    |> Map.put_new_lazy(:user_email, fn ->
+      access_info[:user_email] || System.fetch_env!("GLASSFACTORY_USER_EMAIL")
+    end)
+    |> Map.put_new_lazy(:api_url, fn ->
+      access_info[:api_url] || System.fetch_env!("GLASSFACTORY_API_URL")
+    end)
   end
 end

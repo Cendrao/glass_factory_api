@@ -7,12 +7,11 @@ defmodule GlassFactoryApi.MembersTest do
   setup do
     bypass = Bypass.open()
 
-    config = %GlassFactoryApi.Configuration{
+    config = %{
       subdomain: "foobar",
       user_token: "super-secret-token",
       user_email: "not-so-secret@example.org",
-      api_url: "http://localhost:#{bypass.port}",
-      adapter: GlassFactoryApi.TeslaAdapter
+      api_url: "http://localhost:#{bypass.port}"
     }
 
     {:ok, bypass: bypass, config: config}
@@ -23,7 +22,9 @@ defmodule GlassFactoryApi.MembersTest do
       request_response = GlassFactoryApi.Fixtures.Members.list()
 
       Bypass.expect_once(bypass, fn conn ->
-        Plug.Conn.resp(conn, 200, request_response)
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, request_response)
       end)
 
       assert [
@@ -45,7 +46,9 @@ defmodule GlassFactoryApi.MembersTest do
       request_response = GlassFactoryApi.Fixtures.Members.get()
 
       Bypass.expect_once(bypass, fn conn ->
-        Plug.Conn.resp(conn, 200, request_response)
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, request_response)
       end)
 
       assert %Member{
