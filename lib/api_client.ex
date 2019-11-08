@@ -2,38 +2,44 @@ defmodule GlassFactoryApi.ApiClient do
   @moduledoc """
   Client which make external HTTP Request.
   """
-
-  @access_info Application.get_env(:glass_factory_api, GlassFactoryApi.ApiClient)
-
-  @type http_response() :: {atom(), HttpAdapter.response()}
+  alias GlassFactoryApi.Configuration
 
   @doc """
-  Make a GET request using the given adapter to retrieve the given resource
+  Make a GET request using the given configuration to retrieve the given resource.
 
   ## Examples
       iex> GlassFactoryApi.ApiClient.get("members")
       {:ok , %{body: "[]", headers: [], status_code: 200}}
+
+  If no configuration is passed, it will look for them in `Configuration.build\\1`
   """
 
-  @spec get(String.t()) :: http_response()
-  def get(resource, adapter \\ GlassFactoryApi.TeslaAdapter) do
-    adapter.get(url(resource), headers())
+  @spec get(String.t(), map()) :: Tesla.Env.t()
+  def get(resource, configuration) do
+    config = Configuration.build(configuration)
+    Tesla.get(tesla_client(config), resource)
   end
 
-  defp headers do
+  defp tesla_client(configuration) do
+    middlewares = [
+      Tesla.Middleware.JSON,
+      {Tesla.Middleware.Headers, headers(configuration)},
+      {Tesla.Middleware.BaseUrl, url(configuration)}
+    ]
+
+    Tesla.client(middlewares)
+  end
+
+  defp headers(configuration) do
     [
-      {"X-Account-Subdomain", @access_info[:subdomain]},
-      {"X-User-Token", @access_info[:user_token]},
-      {"X-User-Email", @access_info[:user_email]},
+      {"X-Account-Subdomain", configuration[:subdomain]},
+      {"X-User-Token", configuration[:user_token]},
+      {"X-User-Email", configuration[:user_email]},
       {"Accept", "application/json"}
-   ]
+    ]
   end
 
-  defp url(resource) do
-    "#{api_domain()}/api/public/v1/#{resource}"
-  end
-
-  defp api_domain do
-    Application.get_env(:glass_factory_api, GlassFactoryApi.ApiClient)[:api_url]
+  defp url(configuration) do
+    "#{configuration[:api_url]}/api/public/v1/"
   end
 end

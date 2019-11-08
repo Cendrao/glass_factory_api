@@ -2,15 +2,34 @@ defmodule GlassFactoryApi.ApiClientTest do
   use ExUnit.Case, async: true
 
   alias GlassFactoryApi.ApiClient
-  alias GlassFactoryApi.HTTPMockAdapter
+
+  setup do
+    bypass = Bypass.open()
+
+    config = %{
+      subdomain: "foobar",
+      user_token: "super-secret-token",
+      user_email: "not-so-secret@example.org",
+      api_url: "http://localhost:#{bypass.port}"
+    }
+
+    {:ok, bypass: bypass, config: config}
+  end
 
   describe "get/2" do
-    test "returns a map with the requested information" do
-      assert {:ok, response} = ApiClient.get("users", HTTPMockAdapter)
+    test "returns a map with the requested information", %{bypass: bypass, config: config} do
+      request_response = ~s<{ "description": "some foo json" }>
 
-      assert %{status_code: 200, body: body, headers: headers} = response
-      assert body == "{ \"description\": \"some foo json\" }"
-      assert headers == []
+      Bypass.expect_once(bypass, fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, request_response)
+      end)
+
+      assert {:ok, response} = ApiClient.get("users", config)
+
+      assert %{status: 200, body: body, headers: headers} = response
+      assert body == %{"description" => "some foo json"}
     end
   end
 end

@@ -5,7 +5,7 @@ defmodule GlassFactoryApi.MixProject do
     [
       app: :glass_factory_api,
       version: "0.1.0",
-      elixir: "~> 1.8",
+      elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -25,9 +25,7 @@ defmodule GlassFactoryApi.MixProject do
       {:jason, "~> 1.1"},
       {:ex_doc, "~> 0.21.2", only: :dev},
       {:bypass, "~> 1.0", only: :test},
-      {:tesla, github: "teamon/tesla"},
-      {:mint, "~> 1.0", optional: true},
-      {:castore, "~> 0.1.0", optional: true}
+      {:tesla, github: "teamon/tesla"}
     ]
   end
 
