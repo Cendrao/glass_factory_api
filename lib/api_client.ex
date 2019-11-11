@@ -17,25 +17,29 @@ defmodule GlassFactoryApi.ApiClient do
   @spec get(String.t(), map()) :: Tesla.Env.t()
   def get(resource, configuration) do
     config = Configuration.build(configuration)
+
     Tesla.get(tesla_client(config), resource)
   end
 
   defp tesla_client(configuration) do
     middlewares = [
-      Tesla.Middleware.JSON,
       {Tesla.Middleware.Headers, headers(configuration)},
-      {Tesla.Middleware.BaseUrl, url(configuration)}
+      {Tesla.Middleware.BaseUrl, url(configuration)},
+      Tesla.Middleware.JSON
     ]
 
     Tesla.client(middlewares)
   end
 
   defp headers(configuration) do
+    # NOTE: We have to accept "text/plain" because when GlassFactory API returns
+    # a 404 status code, it sends an invalid JSON that has JSON content-type,
+    # which causes a decode error in `Tesla.Middleware.JSON`.
     [
       {"X-Account-Subdomain", configuration[:subdomain]},
       {"X-User-Token", configuration[:user_token]},
       {"X-User-Email", configuration[:user_email]},
-      {"Accept", "application/json"}
+      {"Accept", "text/plain, application/json"}
     ]
   end
 
