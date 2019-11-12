@@ -1,3 +1,7 @@
+defmodule GlassFactoryApi.ClientNotFound do
+  defexception message: "Client not found!"
+end
+
 defmodule GlassFactoryApi.Clients do
   @moduledoc """
   Provides the methods to list clients of an organization.
@@ -25,6 +29,16 @@ defmodule GlassFactoryApi.Clients do
       Client.to_struct(body)
     else
       {:ok, %{status: 404}} -> nil
+    end
+  end
+
+  def get_client!(client_id, config \\ %{}) do
+    client = get_client(client_id, config)
+
+    if is_nil(client) do
+      raise GlassFactoryApi.ClientNotFound
+    else
+      client
     end
   end
 end
