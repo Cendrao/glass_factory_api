@@ -41,7 +41,9 @@ defmodule GlassFactoryApi.ClientsTest do
         Plug.Conn.resp(conn, 404, "")
       end)
 
-      assert nil == Clients.get_client(1, config)
+      client = Clients.get_client(1, config)
+
+      assert client == nil
     end
   end
 end

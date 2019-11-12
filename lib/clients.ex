@@ -21,13 +21,10 @@ defmodule GlassFactoryApi.Clients do
   """
   @spec get_client(integer(), map) :: nil | GlassFactoryApi.Clients.Client.t()
   def get_client(client_id, config \\ %{}) do
-    case ApiClient.get("clients/#{client_id}", config) do
-      {:ok, %{status: 200, body: body}} ->
-        body
-        |> Client.to_struct()
-
-      {:ok, %{status: 404}} ->
-        nil
+    with {:ok, %{status: 200, body: body}} <- ApiClient.get("clients/#{client_id}", config) do
+      Client.to_struct(body)
+    else
+      {:ok, %{status: 404}} -> nil
     end
   end
 end
