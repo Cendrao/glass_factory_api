@@ -5,11 +5,11 @@ defmodule GlassFactoryApi.Clients.Client do
   alias GlassFactoryApi.Clients.Client
 
   @type t() :: %Client{
-          id: integer(),
+          id: String.t(),
           name: String.t(),
-          archived_at: Date.t(),
-          owner_id: integer(),
-          office_id: integer()
+          archived_at: String.t(),
+          owner_id: String.t(),
+          office_id: String.t()
         }
 
   defstruct [:id, :name, :archived_at, :owner_id, :office_id]
