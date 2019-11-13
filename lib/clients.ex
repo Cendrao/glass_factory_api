@@ -25,6 +25,8 @@ defmodule GlassFactoryApi.Clients do
       {:ok, Client.to_struct(body)}
     else
       {:ok, %{status: 404}} -> {:error, "Can't find a client with id #{client_id}"}
+      {:ok, %{body: body}}  -> {:error, body}
+      {:error, error} -> {:error, error}
     end
   end
 
