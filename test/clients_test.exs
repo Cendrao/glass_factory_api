@@ -28,15 +28,15 @@ defmodule GlassFactoryApi.ClientsTest do
       end)
 
       assert {
-        :ok,
-        %Client{
-          id: 1234,
-          name: "Google",
-          archived_at: nil,
-          owner_id: 567,
-          office_id: 789
-        }
-      } = Clients.get_client(1234, config)
+               :ok,
+               %Client{
+                 id: 1234,
+                 name: "Google",
+                 archived_at: nil,
+                 owner_id: 567,
+                 office_id: 789
+               }
+             } = Clients.get_client(1234, config)
     end
 
     test "returns nil when the id does not exist", %{bypass: bypass, config: config} do
