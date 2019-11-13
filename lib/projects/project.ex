@@ -57,6 +57,7 @@ defmodule GlassFactoryApi.Projects.Project do
          archived: false...
       }
   """
+  @spec to_struct(map()) :: Project.t()
   def to_struct(attrs) do
     %Project{
       archived: attrs["archived"],

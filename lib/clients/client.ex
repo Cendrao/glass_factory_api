@@ -7,7 +7,7 @@ defmodule GlassFactoryApi.Clients.Client do
   @type t() :: %Client{
           id: String.t(),
           name: String.t(),
-          archived_at: String.t(),
+          archived_at: String.t() | nil,
           owner_id: String.t(),
           office_id: String.t()
         }
@@ -28,6 +28,7 @@ defmodule GlassFactoryApi.Clients.Client do
         office_id: 789
       }
   """
+  @spec to_struct(map) :: t
   def to_struct(attrs) do
     %Client{
       id: attrs["id"],

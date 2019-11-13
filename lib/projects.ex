@@ -4,7 +4,7 @@ defmodule GlassFactoryApi.Projects do
   """
 
   alias GlassFactoryApi.ApiClient
-  alias GlassFactoryApi.Projects.Project
+  alias GlassFactoryApi.Projects.{Project, ProjectMember}
 
   @doc """
   Returns a list with organization's projects or `:error` if something went wrong.
@@ -51,6 +51,7 @@ defmodule GlassFactoryApi.Projects do
       iex> GlassFactoryApi.Projects.list_projects!()
       ** (RuntimeError) econnrefused
   """
+  @spec list_projects!(map()) :: list(Project.t())
   def list_projects!(config \\ %{}) do
     with {:ok, projects} <- list_projects(config) do
       projects
@@ -104,9 +105,66 @@ defmodule GlassFactoryApi.Projects do
       iex> GlassFactoryApi.Projects.get_project!("999")
       ** (ArgumentError) Can't find a project with 999
   """
+  @spec get_project!(String.t(), map()) :: Project.t()
   def get_project!(project_id, config \\ %{}) do
     with {:ok, project} <- get_project(project_id, config) do
       project
+    else
+      {:error, error} -> raise error
+    end
+  end
+
+  @doc """
+  Returns the list of members of a given project.
+
+  If the request returns successfully then `{:ok, [%ProjectMember{}]}` will be returned, but if something went wrong `:error` is returned along with a message.
+
+  ## Examples
+
+      iex> GlassFactoryApi.Projects.list_members("123")
+      {:ok, [ %ProjectMember{
+            id: "123456",
+            user_id: "123",
+            project_id: "456"
+          }
+        ]
+      }
+
+      iex> GlassFactoryApi.Projects.list_members("999")
+      [:error, "Can't find a project with ID 999"]
+  """
+  @spec list_members(String.t(), map()) :: {atom(), ProjectMember.t() | String.t()}
+  def list_members(project_id, config \\ %{}) do
+    case ApiClient.get("projects/#{project_id}/members", config) do
+      {:ok, %{status: 200, body: body}} -> {:ok, Enum.map(body, &ProjectMember.to_struct/1)}
+      {:ok, %{status: 404}} -> {:error, "Can't find a project with ID #{project_id}"}
+      {:ok, %{body: body}} -> {:error, body}
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc """
+  Returns the list of members of a given project.
+
+  If the request returns successfully a list of `%{}ProjectMember` will be returned, raises if something went wrong.
+
+  ## Examples
+
+      iex> GlassFactoryApi.Projects.list_members("123")
+      [ %ProjectMember{
+          id: "123456",
+          user_id: "123",
+          project_id: "456"
+        }
+      ]
+
+      iex> GlassFactoryApi.Projects.list_members("999")
+      ** (RuntimeError) econnrefused
+  """
+  @spec list_members!(String.t(), map()) :: ProjectMember.t()
+  def list_members!(project_id, config \\ %{}) do
+    with {:ok, project_members} <- list_members(project_id, config) do
+      project_members
     else
       {:error, error} -> raise error
     end
