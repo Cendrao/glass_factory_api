@@ -46,4 +46,12 @@ defmodule GlassFactoryApi.Clients do
       {:error, error} -> {:error, error}
     end
   end
+
+  def list_clients!(config) do
+    with {:ok, clients} <- list_clients(config) do
+      clients
+    else
+      {:error, error} -> raise error
+    end
+  end
 end
