@@ -1,7 +1,3 @@
-defmodule GlassFactoryApi.ClientNotFound do
-  defexception message: "Client not found!"
-end
-
 defmodule GlassFactoryApi.Clients do
   @moduledoc """
   Provides the methods to list clients of an organization.
@@ -23,22 +19,20 @@ defmodule GlassFactoryApi.Clients do
         office_id: 789
       }
   """
-  @spec get_client(integer(), map) :: nil | GlassFactoryApi.Clients.Client.t()
+  @spec get_client(integer(), map) :: {atom(), Client.t() | String.t()}
   def get_client(client_id, config \\ %{}) do
     with {:ok, %{status: 200, body: body}} <- ApiClient.get("clients/#{client_id}", config) do
-      Client.to_struct(body)
+      {:ok, Client.to_struct(body)}
     else
-      {:ok, %{status: 404}} -> nil
+      {:ok, %{status: 404}} -> {:error, "Can't find a client with id #{client_id}"}
     end
   end
 
   def get_client!(client_id, config \\ %{}) do
-    client = get_client(client_id, config)
-
-    if is_nil(client) do
-      raise GlassFactoryApi.ClientNotFound
-    else
+    with {:ok, client} <- get_client(client_id, config) do
       client
+    else
+      {:error, error} -> raise error
     end
   end
 end

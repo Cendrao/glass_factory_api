@@ -28,13 +28,15 @@ defmodule GlassFactoryApi.ClientsTest do
         |> Plug.Conn.resp(200, request_response)
       end)
 
-      assert %Client{
-               id: 1234,
-               name: "Google",
-               archived_at: nil,
-               owner_id: 567,
-               office_id: 789
-             } = Clients.get_client(1234, config)
+      client = %Client{
+        id: 1234,
+        name: "Google",
+        archived_at: nil,
+        owner_id: 567,
+        office_id: 789
+      }
+
+      assert {:ok, client} = Clients.get_client(1234, config)
     end
 
     test "returns nil when the id does not exist", %{bypass: bypass, config: config} do
@@ -44,7 +46,7 @@ defmodule GlassFactoryApi.ClientsTest do
 
       client = Clients.get_client(1, config)
 
-      assert client == nil
+      assert client == {:error, "Can't find a client with id 1"}
     end
   end
 
@@ -72,7 +74,7 @@ defmodule GlassFactoryApi.ClientsTest do
         Plug.Conn.resp(conn, 404, "")
       end)
 
-      assert_raise ClientNotFound, ~r/^Client not found!/, fn ->
+      assert_raise RuntimeError, ~r/^Can't find a client with id 1/, fn ->
         Clients.get_client!(1, config)
       end
     end
