@@ -1,6 +1,6 @@
 defmodule GlassFactoryApi.Clients.Client do
   @moduledoc """
-  Defines the Client of organization.
+  Defines the Client of an organization.
   """
   alias GlassFactoryApi.Clients.Client
 

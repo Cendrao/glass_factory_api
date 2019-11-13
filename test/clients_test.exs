@@ -3,7 +3,6 @@ defmodule GlassFactoryApi.ClientsTest do
 
   alias GlassFactoryApi.Clients
   alias GlassFactoryApi.Clients.Client
-  alias GlassFactoryApi.ClientNotFound
 
   setup do
     bypass = Bypass.open()
@@ -18,7 +17,7 @@ defmodule GlassFactoryApi.ClientsTest do
     {:ok, bypass: bypass, config: config}
   end
 
-  describe "get_client/1" do
+  describe "get_client/2" do
     test "returns the client of the given id", %{bypass: bypass, config: config} do
       request_response = GlassFactoryApi.Fixtures.Clients.get()
 
@@ -28,15 +27,16 @@ defmodule GlassFactoryApi.ClientsTest do
         |> Plug.Conn.resp(200, request_response)
       end)
 
-      client = %Client{
-        id: 1234,
-        name: "Google",
-        archived_at: nil,
-        owner_id: 567,
-        office_id: 789
-      }
-
-      assert {:ok, client} = Clients.get_client(1234, config)
+      assert {
+        :ok,
+        %Client{
+          id: 1234,
+          name: "Google",
+          archived_at: nil,
+          owner_id: 567,
+          office_id: 789
+        }
+      } = Clients.get_client(1234, config)
     end
 
     test "returns nil when the id does not exist", %{bypass: bypass, config: config} do
@@ -50,7 +50,7 @@ defmodule GlassFactoryApi.ClientsTest do
     end
   end
 
-  describe "get_client!/1" do
+  describe "get_client!/2" do
     test "returns the client of the given id", %{bypass: bypass, config: config} do
       request_response = GlassFactoryApi.Fixtures.Clients.get()
 
