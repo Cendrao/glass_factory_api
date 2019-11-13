@@ -28,15 +28,15 @@ defmodule GlassFactoryApi.ClientsTest do
       end)
 
       assert {
-        :ok,
-        %Client{
-          id: 1234,
-          name: "Google",
-          archived_at: nil,
-          owner_id: 567,
-          office_id: 789
-        }
-      } = Clients.get_client(1234, config)
+               :ok,
+               %Client{
+                 id: 1234,
+                 name: "Google",
+                 archived_at: nil,
+                 owner_id: 567,
+                 office_id: 789
+               }
+             } = Clients.get_client(1234, config)
     end
 
     test "returns nil when the id does not exist", %{bypass: bypass, config: config} do
@@ -77,6 +77,43 @@ defmodule GlassFactoryApi.ClientsTest do
       assert_raise RuntimeError, ~r/^Can't find a client with id 1/, fn ->
         Clients.get_client!(1, config)
       end
+    end
+  end
+
+  describe "list_clients/1" do
+    test "returns all clients", %{bypass: bypass, config: config} do
+      request_response = GlassFactoryApi.Fixtures.Clients.list()
+
+      Bypass.expect_once(bypass, fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, request_response)
+      end)
+
+      clients = [
+        %Client{
+          id: 1234,
+          name: "Google",
+          archived_at: nil,
+          owner_id: 567,
+          office_id: 789
+        },
+        %Client{
+          id: 1235,
+          name: "Facebook",
+          archived_at: nil,
+          owner_id: 567,
+          office_id: 789
+        }
+      ]
+
+      assert {:ok, clients} == Clients.list_clients(config)
+    end
+
+    test "returns error when something went wrong", %{bypass: bypass, config: config} do
+      Bypass.down(bypass)
+
+      assert {:error, "econnrefused"} == Clients.list_clients(config)
     end
   end
 end

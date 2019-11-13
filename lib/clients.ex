@@ -37,4 +37,13 @@ defmodule GlassFactoryApi.Clients do
       {:error, error} -> raise error
     end
   end
+
+  def list_clients(config) do
+    with {:ok, %{status: 200, body: body}} <- ApiClient.get("clients", config) do
+      {:ok, Enum.map(body, &Client.to_struct(&1))}
+    else
+      {:error, error} when is_atom(error) -> {:error, Atom.to_string(error)}
+      {:error, error} -> {:error, error}
+    end
+  end
 end
