@@ -29,7 +29,6 @@ defmodule GlassFactoryApi.Projects do
   def list_projects(config \\ %{}) do
     case ApiClient.get("projects", config) do
       {:ok, %{status: 200, body: body}} -> {:ok, Enum.map(body, &Project.to_struct(&1))}
-      {:error, error} when is_atom(error) -> {:error, Atom.to_string(error)}
       {:error, error} -> {:error, error}
     end
   end
@@ -84,7 +83,6 @@ defmodule GlassFactoryApi.Projects do
       {:ok, %{status: 200, body: body}} -> {:ok, Project.to_struct(body)}
       {:ok, %{status: 404}} -> {:error, "Can't find a project with ID #{project_id}"}
       {:ok, %{body: body}} -> {:error, body}
-      {:error, error} when is_atom(error) -> Atom.to_string(error)
       {:error, error} -> error
     end
   end
@@ -92,7 +90,7 @@ defmodule GlassFactoryApi.Projects do
   @doc """
   Returns the project given the id or raises an error if something went wrong.
 
-  Same of `get_project\2` but raises instead of returning a tuple with `:error` 
+  Same of `get_project\2` but raises instead of returning a tuple with `:error`
 
   ## Examples
 
