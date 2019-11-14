@@ -33,6 +33,7 @@ defmodule GlassFactoryApi.Members.Member do
         joined_at: "2019-01-01"
       }
   """
+  @spec to_struct(map()) :: Member.t()
   def to_struct(attrs) do
     %Member{
       name: attrs["name"],
