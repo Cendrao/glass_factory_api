@@ -35,4 +35,12 @@ defmodule GlassFactoryApi.Clients.Reports do
       {:error, error} -> {:error, error}
     end
   end
+
+  def list_time_reports!(client_id, config \\ %{}) do
+    with {:ok, time_reports} <- list_time_reports(client_id, config) do
+      time_reports
+    else
+      {:error, message} -> raise message
+    end
+  end
 end
