@@ -31,5 +31,11 @@ defmodule GlassFactoryApi.ApiClientTest do
       assert %{status: 200, body: body, headers: headers} = response
       assert body == %{"description" => "some foo json"}
     end
+
+    test "returns the error when connection fail", %{bypass: bypass, config: config} do
+      Bypass.down(bypass)
+
+      assert {:error, "econnrefused"} = ApiClient.get("users", config)
+    end
   end
 end

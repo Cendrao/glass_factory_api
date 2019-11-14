@@ -18,7 +18,12 @@ defmodule GlassFactoryApi.ApiClient do
   def get(resource, configuration) do
     config = Configuration.build(configuration)
 
-    Tesla.get(tesla_client(config), resource)
+    with {:ok, result} <- Tesla.get(tesla_client(config), resource) do
+      {:ok, result}
+    else
+      {:error, error} when is_atom(error) -> {:error, Atom.to_string(error)}
+      {:error, error} -> {:error, error}
+    end
   end
 
   defp tesla_client(configuration) do
