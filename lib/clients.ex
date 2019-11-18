@@ -38,6 +38,37 @@ defmodule GlassFactoryApi.Clients do
     end
   end
 
+  @doc """
+  Return a tuple with `:ok` atom and all clients from an account or an tuple with `:error` and a string with the error
+  description.
+
+  ## Examples
+
+      iex> GlassFactoryApi.Clients.list_clients()
+      {:ok,
+        [
+          %Client{
+            id: 1234,
+            name: "Google",
+            archived_at: null,
+            owner_id: 567,
+            office_id: 789
+          },
+          %Client{
+            id: 1235,
+            name: "Facebook",
+            archived_at: null,
+            owner_id: 567,
+            office_id: 789
+          }
+        ]
+      }
+
+      iex> GlassFactoryApi.Clients.list_clients()
+      {:error, "econnrefused"}
+  """
+
+  @spec list_clients(map()) :: {atom(), [Client.t()] | String.t()}
   def list_clients(config) do
     with {:ok, %{status: 200, body: body}} <- ApiClient.get("clients", config) do
       {:ok, Enum.map(body, &Client.to_struct(&1))}
@@ -47,6 +78,35 @@ defmodule GlassFactoryApi.Clients do
     end
   end
 
+  @doc """
+  Return a list with all clients from an account or raises an error.
+
+  ## Examples
+
+      iex> GlassFactoryApi.Clients.list_clients!()
+      [
+        %Client{
+          id: 1234,
+          name: "Google",
+          archived_at: null,
+          owner_id: 567,
+          office_id: 789
+        },
+        %Client{
+          id: 1235,
+          name: "Facebook",
+          archived_at: null,
+          owner_id: 567,
+          office_id: 789
+        }
+      ]
+
+      iex> GlassFactoryApi.Clients.list_clients!()
+      "econnrefused"
+
+  """
+
+  @spec list_clients!(map()) :: {[Client.t()]}
   def list_clients!(config) do
     with {:ok, clients} <- list_clients(config) do
       clients
