@@ -110,26 +110,26 @@ defmodule GlassFactoryApi.Clients do
 
   ## Examples
 
-  iex> GlassFactoryApi.Clients.list_clients!()
-  [
-    %Client{
-      id: 1234,
-      name: "Google",
-      archived_at: null,
-      owner_id: 567,
-      office_id: 789
-    },
-    %Client{
-      id: 1235,
-      name: "Facebook",
-      archived_at: null,
-      owner_id: 567,
-      office_id: 789
-    }
-  ]
+    iex> GlassFactoryApi.Clients.list_clients!()
+    [
+      %Client{
+        id: 1234,
+        name: "Google",
+        archived_at: null,
+        owner_id: 567,
+        office_id: 789
+      },
+      %Client{
+        id: 1235,
+        name: "Facebook",
+        archived_at: null,
+        owner_id: 567,
+        office_id: 789
+      }
+    ]
 
-  iex> GlassFactoryApi.Clients.list_clients!()
-  "econnrefused"
+    iex> GlassFactoryApi.Clients.list_clients!()
+    "econnrefused"
   """
 
   @spec list_clients!(map()) :: {[Client.t()]}
