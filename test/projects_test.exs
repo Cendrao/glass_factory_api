@@ -2,7 +2,7 @@ defmodule GlassFactoryApi.ProjectsTest do
   use ExUnit.Case, async: true
 
   alias GlassFactoryApi.Projects
-  alias GlassFactoryApi.Projects.Project
+  alias GlassFactoryApi.Projects.{Project, ProjectMember}
 
   setup do
     bypass = Bypass.open()
@@ -132,6 +132,61 @@ defmodule GlassFactoryApi.ProjectsTest do
 
       assert_raise RuntimeError, "Can't find a project with ID 99999", fn ->
         Projects.get_project!("99999", config)
+      end
+    end
+  end
+
+  describe "list_members/2" do
+    test "returns a tuple with ok and a list of ProjectMembers", %{bypass: bypass, config: config} do
+      request_response = GlassFactoryApi.Fixtures.ProjectMembers.list()
+
+      Bypass.expect_once(bypass, fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, request_response)
+      end)
+
+      assert {:ok,
+              [
+                %ProjectMember{
+                  id: "200300",
+                  user_id: "3299",
+                  project_id: "123"
+                }
+              ]} == Projects.list_members("123", config)
+    end
+
+    test "returns a tuple with :error and the error message", %{bypass: bypass, config: config} do
+      Bypass.down(bypass)
+
+      assert {:error, "econnrefused"} == Projects.list_members("123", config)
+    end
+  end
+
+  describe "list_members!/2" do
+    test "returns a list of ProjectMember", %{bypass: bypass, config: config} do
+      request_response = GlassFactoryApi.Fixtures.ProjectMembers.list()
+
+      Bypass.expect_once(bypass, fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, request_response)
+      end)
+
+      assert [
+               %ProjectMember{
+                 id: "200300",
+                 user_id: "3299",
+                 project_id: "123"
+               }
+             ] == Projects.list_members!("123", config)
+    end
+
+    test "raises an error when something went wrong", %{bypass: bypass, config: config} do
+      Bypass.down(bypass)
+
+      assert_raise RuntimeError, "econnrefused", fn ->
+        Projects.list_members!("123", config)
       end
     end
   end

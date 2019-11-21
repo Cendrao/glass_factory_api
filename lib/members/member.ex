@@ -3,9 +3,7 @@ defmodule GlassFactoryApi.Members.Member do
   Defines the Member of organization.
   """
 
-  alias GlassFactoryApi.Members.Member
-
-  @type t() :: %Member{
+  @type t() :: %__MODULE__{
           name: String.t(),
           email: String.t(),
           id: integer(),
@@ -33,9 +31,9 @@ defmodule GlassFactoryApi.Members.Member do
         joined_at: "2019-01-01"
       }
   """
-  @spec to_struct(map()) :: Member.t()
+  @spec to_struct(map()) :: __MODULE__.t()
   def to_struct(attrs) do
-    %Member{
+    %__MODULE__{
       name: attrs["name"],
       id: attrs["id"],
       email: attrs["email"],
