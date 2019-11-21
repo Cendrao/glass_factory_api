@@ -24,3 +24,6 @@ glass_factory_api-*.tar
 
 # Ignore secret config files
 /config/*.secret.exs
+
+# Ignore tool-versions file for asdf
+.tool-versions
