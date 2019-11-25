@@ -12,13 +12,14 @@ defmodule GlassFactoryApi.ApiClient do
       {:ok , %{body: "[]", headers: [], status_code: 200}}
 
   If no configuration is passed, it will look for them in `Configuration.build\\1`
+  If no query string is passed, no filter is applied.
   """
 
-  @spec get(String.t(), map()) :: Tesla.Env.t()
-  def get(resource, configuration) do
+  @spec get(String.t(), [map()], map()) :: Tesla.Env.t()
+  def get(resource, query_string \\ [], configuration) do
     config = Configuration.build(configuration)
 
-    with {:ok, result} <- Tesla.get(tesla_client(config), resource) do
+    with {:ok, result} <- Tesla.get(tesla_client(config), resource, query: query_string) do
       {:ok, result}
     else
       {:error, error} when is_atom(error) -> {:error, Atom.to_string(error)}

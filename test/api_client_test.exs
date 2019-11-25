@@ -16,7 +16,7 @@ defmodule GlassFactoryApi.ApiClientTest do
     {:ok, bypass: bypass, config: config}
   end
 
-  describe "get/2" do
+  describe "get/3" do
     test "returns a map with the requested information", %{bypass: bypass, config: config} do
       request_response = ~s<{ "description": "some foo json" }>
 
