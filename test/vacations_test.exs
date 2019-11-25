@@ -52,7 +52,7 @@ defmodule GlassFactoryApi.VacationsTest do
         }
       ]
 
-      assert {:ok, vacations} == Vacations.get_vacations("", config)
+      assert {:ok, vacations} == Vacations.get_vacations([], config)
     end
 
     test "with a user_id, returns a list of vacations for that user", %{bypass: bypass, config: config} do
@@ -78,7 +78,7 @@ defmodule GlassFactoryApi.VacationsTest do
         }
       ]
 
-      assert {:ok, user_vacations} == Vacations.get_vacations(734, config)
+      assert {:ok, user_vacations} == Vacations.get_vacations([user_id: 734], config)
     end
 
     test "with a invalid user_id, returns an error", %{bypass: bypass, config: config} do
@@ -87,9 +87,9 @@ defmodule GlassFactoryApi.VacationsTest do
         |> Plug.Conn.resp(404, "")
       end)
 
-      user_vacations = Vacations.get_vacations(1, config)
+      user_vacations = Vacations.get_vacations([user_id: 1], config)
 
-      assert user_vacations == {:error, "Can't find the vacations from user id 1"}
+      assert user_vacations == {:error, "Vacations not found"}
     end
   end
 end
