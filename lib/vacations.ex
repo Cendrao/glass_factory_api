@@ -69,6 +69,8 @@ defmodule GlassFactoryApi.Vacations do
       {:ok, Enum.map(body, &Vacation.to_struct(&1))}
     else
       {:ok, %{status: 404}} -> {:error, "Vacations not found"}
+      {:ok, %{body: body}} -> {:error, body}
+      {:ok, error} -> {:error, error}
     end
   end
 end
