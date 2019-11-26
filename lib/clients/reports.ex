@@ -23,7 +23,7 @@ defmodule GlassFactoryApi.Clients.Reports do
   """
   @spec list_time_reports(integer(), map()) :: {:error, String.t()} | {:ok, [TimeReport.t()]}
   def list_time_reports(client_id, config \\ %{}) do
-    client_request = ApiClient.get("clients/#{client_id}/reports/time", config)
+    client_request = ApiClient.get("clients/#{client_id}/reports/time", [], config)
 
     with {:ok, %{status: 200, body: body}} <- client_request do
       time_reports = Enum.map(body, &TimeReport.to_struct(&1))

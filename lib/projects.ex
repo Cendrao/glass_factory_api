@@ -27,7 +27,7 @@ defmodule GlassFactoryApi.Projects do
   """
   @spec list_projects(map()) :: {atom(), list(Project.t())}
   def list_projects(config \\ %{}) do
-    case ApiClient.get("projects", config) do
+    case ApiClient.get("projects", [], config) do
       {:ok, %{status: 200, body: body}} -> {:ok, Enum.map(body, &Project.to_struct(&1))}
       {:error, error} -> {:error, error}
     end
@@ -80,7 +80,7 @@ defmodule GlassFactoryApi.Projects do
   """
   @spec get_project(String.t(), map()) :: {atom(), Project.t() | atom()}
   def get_project(project_id, config \\ %{}) do
-    case ApiClient.get("projects/#{project_id}", config) do
+    case ApiClient.get("projects/#{project_id}", [], config) do
       {:ok, %{status: 200, body: body}} -> {:ok, Project.to_struct(body)}
       {:ok, %{status: 404}} -> {:error, "Can't find a project with ID #{project_id}"}
       {:ok, %{body: body}} -> {:error, body}
@@ -135,7 +135,7 @@ defmodule GlassFactoryApi.Projects do
   """
   @spec list_members(String.t(), map()) :: {atom(), ProjectMember.t() | String.t()}
   def list_members(project_id, config \\ %{}) do
-    case ApiClient.get("projects/#{project_id}/members", config) do
+    case ApiClient.get("projects/#{project_id}/members", [], config) do
       {:ok, %{status: 200, body: body}} -> {:ok, Enum.map(body, &ProjectMember.to_struct/1)}
       {:ok, %{status: 404}} -> {:error, "Can't find a project with ID #{project_id}"}
       {:ok, %{body: body}} -> {:error, body}
