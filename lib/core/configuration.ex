@@ -14,7 +14,7 @@ defmodule GlassFactoryApi.Configuration do
 
     opts
     |> Map.put_new_lazy(:subdomain, fn ->
-      access_info[:user_token] || System.fetch_env!("GLASSFACTORY_SUBDOMAIN")
+      access_info[:subdomain] || System.fetch_env!("GLASSFACTORY_SUBDOMAIN")
     end)
     |> Map.put_new_lazy(:user_token, fn ->
       access_info[:user_token] || System.fetch_env!("GLASSFACTORY_USER_TOKEN")
