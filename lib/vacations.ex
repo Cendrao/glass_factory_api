@@ -66,7 +66,7 @@ defmodule GlassFactoryApi.Vacations do
 
   @spec get_vacations([], map()) :: {atom(), [Vacation.t() | String.t()]}
   def get_vacations(query_string \\ [], config \\ %{}) do
-    with {:ok, %{status: 200, body: body}} <- ApiClient.get("vacations", query_string, config) do
+    with {:ok, %{status: 200, body: body}} <- ApiClient.get("vacations", filter_query_string(query_string), config) do
       {:ok, Enum.map(body, &Vacation.to_struct(&1))}
     else
       {:ok, %{status: 404}} -> {:error, "Vacations not found"}
@@ -135,5 +135,9 @@ defmodule GlassFactoryApi.Vacations do
     else
       {:error, error} -> raise error
     end
+  end
+
+  defp filter_query_string(query_string) do
+    Keyword.take(query_string, [:start, :end, :user_id, :vacation_type])
   end
 end
