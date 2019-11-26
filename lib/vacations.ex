@@ -70,7 +70,15 @@ defmodule GlassFactoryApi.Vacations do
     else
       {:ok, %{status: 404}} -> {:error, "Vacations not found"}
       {:ok, %{body: body}} -> {:error, body}
-      {:ok, error} -> {:error, error}
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  def get_vacations!(query_string \\ [], config \\ %{}) do
+    with {:ok, vacations} <- get_vacations(query_string, config) do
+      vacations
+    else
+      {:error, error} -> raise error
     end
   end
 end
