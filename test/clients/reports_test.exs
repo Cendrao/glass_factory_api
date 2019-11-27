@@ -42,7 +42,7 @@ defmodule GlassFactoryApi.Clients.ReportsTest do
                    time: 0
                  }
                ]
-             } = Reports.list_time_reports(2079, config)
+             } = Reports.list_time_reports(2079, [date: ~D[2019-01-01]], config)
     end
 
     test "returns empty array when not time reports are found", %{bypass: bypass, config: config} do
@@ -50,7 +50,7 @@ defmodule GlassFactoryApi.Clients.ReportsTest do
         Plug.Conn.resp(conn, 404, "")
       end)
 
-      time_reports = Reports.list_time_reports(1, config)
+      time_reports = Reports.list_time_reports(1, [date: ~D[2019-01-01]], config)
 
       assert time_reports == {:error, "Can't find time reports for client id 1"}
     end
@@ -78,7 +78,7 @@ defmodule GlassFactoryApi.Clients.ReportsTest do
                  planned: 8,
                  time: 0
                }
-             ] = Reports.list_time_reports!(2079, config)
+             ] = Reports.list_time_reports!(2079, [date: ~D[2019-01-01]], config)
     end
 
     test "raises an exception when not found", %{bypass: bypass, config: config} do
@@ -87,7 +87,7 @@ defmodule GlassFactoryApi.Clients.ReportsTest do
       end)
 
       assert_raise RuntimeError, ~r/^Can't find time reports for client id 1/, fn ->
-        Reports.list_time_reports!(1, config)
+        Reports.list_time_reports!(1, [user_id: 123], config)
       end
     end
   end
