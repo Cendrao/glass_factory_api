@@ -6,6 +6,14 @@ defmodule GlassFactoryApi.Clients.Reports do
   Provides function that get client reports from GlassFactory
   """
 
+  @type parameters() :: [
+          start: String.t(),
+          end: String.t(),
+          user_id: String.t(),
+          date: String.t(),
+          project_id: String.t()
+        ]
+
   @doc """
   List time reports from the given client id
 
@@ -25,7 +33,8 @@ defmodule GlassFactoryApi.Clients.Reports do
         }
       ]
   """
-  @spec list_time_reports(integer, Keyword.t, map) :: {:error, String.t} | {:ok, [TimeReport.t]}
+  @spec list_time_reports(integer, parameters, map) ::
+          {:error, String.t()} | {:ok, [TimeReport.t()]}
   def list_time_reports(client_id, opts \\ [], config \\ %{}) do
     client_request = ApiClient.get("clients/#{client_id}/reports/time", filter_opts(opts), config)
 
@@ -64,7 +73,7 @@ defmodule GlassFactoryApi.Clients.Reports do
       iex> GlassFactoryApi.Clients.Reports.list_time_reports!(999)
       ** (RuntimeError) Can't find time reports for client id 999
   """
-  @spec list_time_reports!(integer, Keyword.t, map) :: [TimeReport.t()]
+  @spec list_time_reports!(integer, parameters, map) :: [TimeReport.t()]
   def list_time_reports!(client_id, opts \\ [], config \\ %{}) do
     with {:ok, time_reports} <- list_time_reports(client_id, opts, config) do
       time_reports
