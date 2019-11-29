@@ -82,6 +82,28 @@ defmodule GlassFactoryApi.Clients.Reports do
     end
   end
 
+  @doc """
+  List rates and costs reports from the given client id
+
+  ## Examples
+
+      iex> GlassFactoryApi.Clients.Reports.list_rates_and_costs_reports(1234, [], config)
+      [:ok, %RatesAndCostsReport{
+          client_id: 1234,
+          project_id: 12345,
+          job_id: nil,
+          activity_id: 123_456,
+          user_id: 222,
+          role_id: 1234,
+          date: "2018-06-19",
+          time: 8,
+          rate: 35,
+          cost: 35
+        }
+      ]
+  """
+  @spec list_rates_and_costs_reports(integer(), Keyword.t(), map) ::
+          {:error, any} | {:ok, [RatesAndCostsReport]}
   def list_rates_and_costs_reports(client_id, opts \\ [], config \\ []) do
     client_request =
       ApiClient.get("clients/#{client_id}/reports/money", filter_opts(opts), config)
@@ -102,6 +124,32 @@ defmodule GlassFactoryApi.Clients.Reports do
     end
   end
 
+  @doc """
+  List rates and costs reports from the given client id or raises an error if something went wrong.
+
+  Same of `list_rates_and_costs_reports/3` but raises instead of returning a tuple with `:error`
+
+  ## Examples
+
+      iex> GlassFactoryApi.Clients.Reports.list_rates_and_costs_reports!(1234, [], config)
+      [ %RatesAndCostsReport{
+          client_id: 1234,
+          project_id: 12345,
+          job_id: nil,
+          activity_id: 123_456,
+          user_id: 222,
+          role_id: 1234,
+          date: "2018-06-19",
+          time: 8,
+          rate: 35,
+          cost: 35
+        }
+      ]
+
+      iex> GlassFactoryApi.Clients.Reports.list_rates_and_costs_reports!(999)
+      ** (RuntimeError) Can't find rates and costs reports for client id 999
+  """
+  @spec list_rates_and_costs_reports!(integer(), Keyword.t(), map) :: [RatesAndCostsReport]
   def list_rates_and_costs_reports!(client_id, opts \\ [], config \\ []) do
     with {:ok, rates_and_costs_reports} <- list_rates_and_costs_reports(client_id, opts, config) do
       rates_and_costs_reports

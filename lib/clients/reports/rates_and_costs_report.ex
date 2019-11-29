@@ -35,7 +35,7 @@ defmodule GlassFactoryApi.Clients.Reports.RatesAndCostsReport do
 
   ## Examples
 
-      iex> GlassFactoryApi.Clients.Reports.RatesAndCostsReport(%{client_id: 1234, project_id: 12345...})
+      iex> GlassFactoryApi.Clients.Reports.RatesAndCostsReport.to_struct(%{client_id: 1234, project_id: 12345...})
       %RatesAndCostsReport{
         client_id: 1234,
         project_id: 12345,
