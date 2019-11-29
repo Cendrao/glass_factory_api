@@ -28,7 +28,7 @@ defmodule GlassFactoryApi.Clients do
   """
   @spec get_client(integer(), map) :: {atom(), Client.t() | String.t()}
   def get_client(client_id, config \\ %{}) do
-    with {:ok, %{status: 200, body: body}} <- ApiClient.get("clients/#{client_id}", [], config) do
+    with {:ok, %{status: 200, body: body}} <- ApiClient.get("clients/#{client_id}", config) do
       {:ok, Client.to_struct(body)}
     else
       {:ok, %{status: 404}} -> {:error, "Can't find a client with id #{client_id}"}
