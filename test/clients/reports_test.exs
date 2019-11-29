@@ -134,4 +134,44 @@ defmodule GlassFactoryApi.Clients.ReportsTest do
       assert time_reports == {:error, "Can't find rates and costs reports for client id 1"}
     end
   end
+
+  describe "list_rates_and_costs_reports!/3" do
+    test "returns rates and costs reports of the given client id", %{
+      bypass: bypass,
+      config: config
+    } do
+      request_response = GlassFactoryApi.Fixtures.Clients.Reports.list_rates_and_costs_reports()
+
+      Bypass.expect_once(bypass, fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, request_response)
+      end)
+
+      assert [
+               %RatesAndCostsReport{
+                 client_id: 1234,
+                 project_id: 12345,
+                 job_id: nil,
+                 activity_id: 123_456,
+                 user_id: 222,
+                 role_id: 1234,
+                 date: "2018-06-19",
+                 time: 8,
+                 rate: 35,
+                 cost: 35
+               }
+             ] = Reports.list_rates_and_costs_reports!(1234, [], config)
+    end
+
+    test "raises an exception when not found", %{bypass: bypass, config: config} do
+      Bypass.expect_once(bypass, fn conn ->
+        Plug.Conn.resp(conn, 404, "")
+      end)
+
+      assert_raise RuntimeError, ~r/^Can't find rates and costs reports for client id 1/, fn ->
+        Reports.list_rates_and_costs_reports!(1, [], config)
+      end
+    end
+  end
 end

@@ -102,6 +102,14 @@ defmodule GlassFactoryApi.Clients.Reports do
     end
   end
 
+  def list_rates_and_costs_reports!(client_id, opts \\ [], config \\ []) do
+    with {:ok, rates_and_costs_reports} <- list_rates_and_costs_reports(client_id, opts, config) do
+      rates_and_costs_reports
+    else
+      {:error, message} -> raise message
+    end
+  end
+
   defp filter_opts(opts) do
     Keyword.take(opts, [:start, :end, :user_id, :date, :project_id])
   end
