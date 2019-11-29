@@ -131,7 +131,7 @@ defmodule GlassFactoryApi.VacationsTest do
       assert vacations == Vacations.get_vacations!([], config)
     end
 
-    test "raises an exception when something went wrong", %{bypass: bypass, config: config} do
+    test "raises an exception when something goes wrong", %{bypass: bypass, config: config} do
       Bypass.down(bypass)
 
       assert_raise RuntimeError, "econnrefused", fn ->

@@ -15,7 +15,7 @@ defmodule GlassFactoryApi.ApiClient do
   If no query string is passed, no filter is applied.
   """
 
-  @spec get(String.t(), [map()], map()) :: Tesla.Env.t()
+  @spec get(String.t(), Keyword.t(), map()) :: Tesla.Env.t()
   def get(resource, query_string \\ [], configuration) do
     config = Configuration.build(configuration)
 
