@@ -96,7 +96,7 @@ defmodule GlassFactoryApi.Clients do
   """
 
   @spec list_clients(map()) :: {atom(), [Client.t()] | String.t()}
-  def list_clients(config) do
+  def list_clients(config \\ %{}) do
     with {:ok, %{status: 200, body: body}} <- ApiClient.get("clients", config) do
       {:ok, Enum.map(body, &Client.to_struct(&1))}
     else
@@ -132,7 +132,7 @@ defmodule GlassFactoryApi.Clients do
   """
 
   @spec list_clients!(map()) :: {[Client.t()]}
-  def list_clients!(config) do
+  def list_clients!(config \\ %{}) do
     with {:ok, clients} <- list_clients(config) do
       clients
     else
