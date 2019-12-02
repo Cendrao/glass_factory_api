@@ -88,7 +88,7 @@ defmodule GlassFactoryApi.Clients.Reports do
   ## Examples
 
       iex> GlassFactoryApi.Clients.Reports.list_rates_and_costs_reports(1234, [], config)
-      [:ok, %RatesAndCostsReport{
+      {:ok, [%RatesAndCostsReport{
           client_id: 1234,
           project_id: 12345,
           job_id: nil,
@@ -99,8 +99,8 @@ defmodule GlassFactoryApi.Clients.Reports do
           time: 8,
           rate: 35,
           cost: 35
-        }
-      ]
+        }]
+      }
   """
   @spec list_rates_and_costs_reports(integer(), Keyword.t(), map) ::
           {:error, any} | {:ok, [RatesAndCostsReport]}
