@@ -10,22 +10,15 @@ defmodule GlassFactoryApi.Vacations do
   Return a tuple with `:ok` atom and an list of vacations.
   or a tuple with `:error` and a string with the error description.
 
-  It's possible apply some filters, like user_id, start and end to limit dates, and vacation_type
-  using the query_string param.
+  ## Params
 
-  ## Arguments
+  The supported filters are:
 
-  - query_string - options to filter the vacations.
-
-    ## Options
     * `user_id` (positive integer) - to return only the vacations from the user id specified.
     * `start` (date yyyy-mm-dd) - to filter the vacations from a period.
     * `end` (date yyyy-mm-dd) - to filter the vacations up until a period.
 
-
-    If you use start, you need to use end option too.
-
-  - config - configurations for HTTP request
+  If you use start, you need to use end option too.
 
   ## Examples
 
@@ -79,9 +72,9 @@ defmodule GlassFactoryApi.Vacations do
   """
 
   @spec get_vacations(Keyword.t(), map()) :: {atom(), [Vacation.t() | String.t()]}
-  def get_vacations(query_string \\ [], config \\ %{}) do
+  def get_vacations(query \\ [], config \\ %{}) do
     with {:ok, %{status: 200, body: body}} <-
-           ApiClient.get("vacations", filter_query_string(query_string), config) do
+           ApiClient.get("vacations", filter_query_string(query), config) do
       {:ok, Enum.map(body, &Vacation.to_struct/1)}
     else
       {:ok, %{status: 404}} -> {:error, "Vacations not found"}
@@ -93,19 +86,15 @@ defmodule GlassFactoryApi.Vacations do
   @doc """
   Similar to get_vacation/2, returns a list of vacations or raises an error.
 
-  ## Arguments
+  ## Params
 
-  - query_string - options to filter the vacations.
+  The supported filters are:
 
-    ## Options
     * `user_id` (positive integer) - to return only the vacations from the user id specified.
     * `start` (date yyyy-mm-dd) - to filter the vacations from a period.
     * `end` (date yyyy-mm-dd) - to filter the vacations up until a period.
 
-
-    If you use start, you need to use end option too.
-
-  - config - configurations for HTTP request
+  If you use start, you need to use end option too.
 
   ## Examples
 
