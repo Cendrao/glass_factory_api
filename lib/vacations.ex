@@ -23,7 +23,7 @@ defmodule GlassFactoryApi.Vacations do
     * `end` (date yyyy-mm-dd) - to filter the vacations up until a period.
 
 
-    If you use start, you need to use end options too.
+    If you use start, you need to use end option too.
 
   - config - configurations for HTTP request
 
@@ -103,7 +103,7 @@ defmodule GlassFactoryApi.Vacations do
     * `end` (date yyyy-mm-dd) - to filter the vacations up until a period.
 
 
-    If you use start, you need to use end options too.
+    If you use start, you need to use end option too.
 
   - config - configurations for HTTP request
 
