@@ -10,7 +10,7 @@ defmodule GlassFactoryApi.Clients.Reports do
           start: String.t(),
           end: String.t(),
           user_id: String.t(),
-          date: String.t(),
+          date: Date.t(),
           project_id: String.t()
         ]
 
