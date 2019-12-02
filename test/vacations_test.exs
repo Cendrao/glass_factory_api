@@ -55,7 +55,10 @@ defmodule GlassFactoryApi.VacationsTest do
       assert {:ok, vacations} == Vacations.get_vacations([], config)
     end
 
-    test "with a user_id pass by filter, returns a list of vacations for that user", %{bypass: bypass, config: config} do
+    test "with a user_id pass by filter, returns a list of vacations for that user", %{
+      bypass: bypass,
+      config: config
+    } do
       request_response = GlassFactoryApi.Fixtures.Vacations.get_one_user()
 
       Bypass.expect_once(bypass, fn conn ->
@@ -65,7 +68,7 @@ defmodule GlassFactoryApi.VacationsTest do
       end)
 
       user_vacations = [
-       %Vacation{
+        %Vacation{
           id: 132,
           upcoming: false,
           daily_hours: 8,

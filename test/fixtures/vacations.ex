@@ -45,5 +45,4 @@ defmodule GlassFactoryApi.Fixtures.Vacations do
     ]
     >
   end
-
 end
