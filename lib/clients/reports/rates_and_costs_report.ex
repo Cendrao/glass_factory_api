@@ -51,13 +51,13 @@ defmodule GlassFactoryApi.Clients.Reports.RatesAndCostsReport do
   """
   def to_struct(attrs) do
     %RatesAndCostsReport{
-      client_id: attrs["client_id"],
-      project_id: attrs["project_id"],
+      client_id: Map.fetch!(attrs, "client_id"),
+      project_id: Map.fetch!(attrs, "project_id"),
       job_id: attrs["job_id"],
       activity_id: attrs["activity_id"],
-      user_id: attrs["user_id"],
+      user_id: Map.fetch!(attrs, "user_id"),
       role_id: attrs["role_id"],
-      date: attrs["date"],
+      date: Map.fetch!(attrs, "date"),
       time: attrs["time"],
       rate: attrs["rate"],
       cost: attrs["cost"]
