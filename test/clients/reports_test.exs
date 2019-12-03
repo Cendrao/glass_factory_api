@@ -102,23 +102,22 @@ defmodule GlassFactoryApi.Clients.ReportsTest do
         |> Plug.Conn.resp(200, request_response)
       end)
 
-      assert {
-               :ok,
-               [
-                 %RatesAndCostsReport{
-                   client_id: 1234,
-                   project_id: 12345,
-                   job_id: nil,
-                   activity_id: 123_456,
-                   user_id: 222,
-                   role_id: 1234,
-                   date: "2018-06-19",
-                   time: 8,
-                   rate: 35,
-                   cost: 35
-                 }
-               ]
-             } = Reports.list_rates_and_costs_reports(2079, [], config)
+      expected = %RatesAndCostsReport{
+        client_id: 1234,
+        project_id: 12345,
+        job_id: nil,
+        activity_id: 123_456,
+        user_id: 222,
+        role_id: 1234,
+        date: "2018-06-19",
+        time: 8,
+        rate: 35,
+        cost: 35
+      }
+
+      assert {:ok, [report]} = Reports.list_rates_and_costs_reports(2079, [], config)
+
+      assert expected == report
     end
 
     test "returns empty array when no rates and costs reports are found", %{
@@ -140,12 +139,12 @@ defmodule GlassFactoryApi.Clients.ReportsTest do
       bypass: bypass,
       config: config
     } do
-      request_response = GlassFactoryApi.Fixtures.Clients.Reports.list_rates_and_costs_reports()
+      expected_response = GlassFactoryApi.Fixtures.Clients.Reports.list_rates_and_costs_reports()
 
       Bypass.expect_once(bypass, fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
-        |> Plug.Conn.resp(200, request_response)
+        |> Plug.Conn.resp(200, expected_response)
       end)
 
       assert [

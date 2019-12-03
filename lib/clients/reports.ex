@@ -104,12 +104,12 @@ defmodule GlassFactoryApi.Clients.Reports do
   """
   @spec list_rates_and_costs_reports(integer(), Keyword.t(), map) ::
           {:error, any} | {:ok, [RatesAndCostsReport]}
-  def list_rates_and_costs_reports(client_id, opts \\ [], config \\ []) do
+  def list_rates_and_costs_reports(client_id, opts \\ [], config \\ %{}) do
     client_request =
       ApiClient.get("clients/#{client_id}/reports/money", filter_opts(opts), config)
 
     with {:ok, %{status: 200, body: body}} <- client_request do
-      rates_and_costs_reports = Enum.map(body, &RatesAndCostsReport.to_struct(&1))
+      rates_and_costs_reports = Enum.map(body, &RatesAndCostsReport.to_struct/1)
 
       {:ok, rates_and_costs_reports}
     else
