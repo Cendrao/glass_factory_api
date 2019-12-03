@@ -147,20 +147,21 @@ defmodule GlassFactoryApi.Clients.ReportsTest do
         |> Plug.Conn.resp(200, expected_response)
       end)
 
-      assert [
-               %RatesAndCostsReport{
-                 client_id: 1234,
-                 project_id: 12345,
-                 job_id: nil,
-                 activity_id: 123_456,
-                 user_id: 222,
-                 role_id: 1234,
-                 date: "2018-06-19",
-                 time: 8,
-                 rate: 35,
-                 cost: 35
-               }
-             ] = Reports.list_rates_and_costs_reports!(1234, [], config)
+      expected_report = %RatesAndCostsReport{
+        client_id: 1234,
+        project_id: 12345,
+        job_id: nil,
+        activity_id: 123_456,
+        user_id: 222,
+        role_id: 1234,
+        date: "2018-06-19",
+        time: 8,
+        rate: 35,
+        cost: 35
+      }
+
+      assert [report] = Reports.list_rates_and_costs_reports!(1234, [], config)
+      assert expected_report == report
     end
 
     test "raises an exception when not found", %{bypass: bypass, config: config} do

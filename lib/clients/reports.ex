@@ -150,7 +150,7 @@ defmodule GlassFactoryApi.Clients.Reports do
       ** (RuntimeError) Can't find rates and costs reports for client id 999
   """
   @spec list_rates_and_costs_reports!(integer(), Keyword.t(), map) :: [RatesAndCostsReport]
-  def list_rates_and_costs_reports!(client_id, opts \\ [], config \\ []) do
+  def list_rates_and_costs_reports!(client_id, opts \\ [], config \\ %{}) do
     with {:ok, rates_and_costs_reports} <- list_rates_and_costs_reports(client_id, opts, config) do
       rates_and_costs_reports
     else
