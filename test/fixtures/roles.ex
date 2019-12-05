@@ -8,9 +8,9 @@ defmodule GlassFactoryApi.Fixtures.Roles do
         "description": "Partner",
         "department_id": 10,
         "is_used": true,
-        "rate": null,
+        "rate": 200.0,
         "cost": null,
-        "currency": null,
+        "currency": "BRL",
         "archived": false
       },
       {
@@ -19,9 +19,9 @@ defmodule GlassFactoryApi.Fixtures.Roles do
         "description": "Associate",
         "department_id": 10,
         "is_used": true,
-        "rate": null,
+        "rate": 90.0,
         "cost": null,
-        "currency": null,
+        "currency": "BRL",
         "archived": false
       }
     ]

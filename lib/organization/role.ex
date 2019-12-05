@@ -8,9 +8,9 @@ defmodule GlassFactoryApi.Organization.Role do
           name: String.t(),
           description: String.t(),
           department_id: String.t(),
-          is_used: boolean(),
-          rate: float(),
-          cost: float(),
+          is_used: boolean,
+          rate: String.t(),
+          cost: String.t(),
           currency: String.t(),
           archived: boolean
         }
@@ -34,8 +34,8 @@ defmodule GlassFactoryApi.Organization.Role do
       description: Map.fetch!(attrs, "description"),
       department_id: attrs["department_id"],
       is_used: attrs["is_used"],
-      rate: attrs["rate"],
-      cost: attrs["cost"],
+      rate: to_string(attrs["rate"]),
+      cost: to_string(attrs["cost"]),
       currency: attrs["currency"],
       archived: attrs["archived"]
     }

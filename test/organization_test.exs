@@ -36,9 +36,9 @@ defmodule GlassFactoryApi.OrganizationTest do
                  description: "Partner",
                  department_id: 10,
                  is_used: true,
-                 rate: nil,
-                 cost: nil,
-                 currency: nil,
+                 rate: "200.0",
+                 cost: "",
+                 currency: "BRL",
                  archived: false
                },
                %Role{
@@ -47,9 +47,9 @@ defmodule GlassFactoryApi.OrganizationTest do
                  description: "Associate",
                  department_id: 10,
                  is_used: true,
-                 rate: nil,
-                 cost: nil,
-                 currency: nil,
+                 rate: "90.0",
+                 cost: "",
+                 currency: "BRL",
                  archived: false
                }
              ]
@@ -82,9 +82,9 @@ defmodule GlassFactoryApi.OrganizationTest do
                  description: "Partner",
                  department_id: 10,
                  is_used: true,
-                 rate: nil,
-                 cost: nil,
-                 currency: nil,
+                 rate: "200.0",
+                 cost: "",
+                 currency: "BRL",
                  archived: false
                },
                %Role{
@@ -93,9 +93,9 @@ defmodule GlassFactoryApi.OrganizationTest do
                  description: "Associate",
                  department_id: 10,
                  is_used: true,
-                 rate: nil,
-                 cost: nil,
-                 currency: nil,
+                 rate: "90.0",
+                 cost: "",
+                 currency: "BRL",
                  archived: false
                }
              ] == Organization.list_roles!(config)
