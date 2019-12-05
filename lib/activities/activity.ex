@@ -2,9 +2,8 @@ defmodule GlassFactoryApi.Activities.Activity do
   @moduledoc """
   Defines the Activity of an organization.
   """
-  alias __MODULE__, as: Activity
 
-  @type t() :: %Activity{
+  @type t() :: %__MODULE__{
           id: integer(),
           name: String.t()
         }
@@ -24,7 +23,7 @@ defmodule GlassFactoryApi.Activities.Activity do
   """
   @spec to_struct(map) :: t
   def to_struct(attrs) do
-    %Activity{
+    %__MODULE__{
       id: Map.fetch!(attrs, "id"),
       name: Map.fetch!(attrs, "name")
     }
