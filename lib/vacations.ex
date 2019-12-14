@@ -22,53 +22,53 @@ defmodule GlassFactoryApi.Vacations do
 
   ## Examples
 
-  iex> GlassFactoryApi.Clients.get_vacations()
-  {:ok,
-    [
-      %Vacation{
-        id: 119,
-        upcoming: false,
-        daily_hours: 8,
-        start_date: "2017-07-24",
-        end_date: "2017-07-30",
-        days: 7,
-        vacation_type: "paid",
-        creator_id: 722,
-        user_id: 722,
-      },
-      %Vacation{
-        id: 132,
-        upcoming: false,
-        daily_hours: 8,
-        start_date: "2019-07-20",
-        end_date: "2019-07-30",
-        days: 10,
-        vacation_type: "paid",
-        creator_id: 734,
-        user_id: 734
+      iex> GlassFactoryApi.Clients.get_vacations()
+      {:ok,
+        [
+          %Vacation{
+            id: 119,
+            upcoming: false,
+            daily_hours: 8,
+            start_date: "2017-07-24",
+            end_date: "2017-07-30",
+            days: 7,
+            vacation_type: "paid",
+            creator_id: 722,
+            user_id: 722,
+          },
+          %Vacation{
+            id: 132,
+            upcoming: false,
+            daily_hours: 8,
+            start_date: "2019-07-20",
+            end_date: "2019-07-30",
+            days: 10,
+            vacation_type: "paid",
+            creator_id: 734,
+            user_id: 734
+          }
+        ]
       }
-    ]
-  }
 
-  iex> GlassFactoryApi.Clients.get_vacations([user_id: 734, start: 2019-07-01, end: 2019-07-31])
-  {:ok,
-    [
-      %Vacation{
-        id: 132,
-        upcoming: false,
-        daily_hours: 8,
-        start_date: "2019-07-20",
-        end_date: "2019-07-30",
-        days: 10,
-        vacation_type: "paid",
-        creator_id: 734,
-        user_id: 734
+      iex> GlassFactoryApi.Clients.get_vacations([user_id: 734, start: 2019-07-01, end: 2019-07-31])
+      {:ok,
+        [
+          %Vacation{
+            id: 132,
+            upcoming: false,
+            daily_hours: 8,
+            start_date: "2019-07-20",
+            end_date: "2019-07-30",
+            days: 10,
+            vacation_type: "paid",
+            creator_id: 734,
+            user_id: 734
+          }
+        ]
       }
-    ]
-  }
 
-  iex> GlassFactoryApi.Clients.get_vacations("1")
-  {:ok, []}
+      iex> GlassFactoryApi.Clients.get_vacations("1")
+      {:ok, []}
   """
 
   @spec get_vacations(Keyword.t(), map()) :: {atom(), [Vacation.t() | String.t()]}
