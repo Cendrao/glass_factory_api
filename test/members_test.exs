@@ -128,4 +128,53 @@ defmodule GlassFactoryApi.MembersTest do
       end
     end
   end
+
+  describe "list_active_members/1" do
+    test "returns a list of members", %{bypass: bypass, config: config} do
+      request_response = GlassFactoryApi.Fixtures.Members.list()
+
+      Bypass.expect_once(bypass, fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, request_response)
+      end)
+
+      assert {:ok,
+              [
+                %Member{
+                  id: 2666,
+                  name: "John Doe",
+                  archived: false,
+                  capacity: 8.0,
+                  email: "john.doe@example.org",
+                  freelancer: false,
+                  joined_at: "2019-01-01"
+                }
+              ]} == Members.list_active_members(config)
+    end
+  end
+
+  describe "list_active_members!/1" do
+    test "returns a list of members", %{bypass: bypass, config: config} do
+      request_response = GlassFactoryApi.Fixtures.Members.list()
+
+      Bypass.expect_once(bypass, fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, request_response)
+      end)
+
+      assert [
+               %Member{
+                 id: 2666,
+                 name: "John Doe",
+                 archived: false,
+                 capacity: 8.0,
+                 email: "john.doe@example.org",
+                 freelancer: false,
+                 joined_at: "2019-01-01"
+               }
+             ] == Members.list_active_members!(config)
+    end
+  end
 end
