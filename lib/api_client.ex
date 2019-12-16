@@ -8,6 +8,7 @@ defmodule GlassFactoryApi.ApiClient do
   Make a GET request using the given configuration to retrieve the given resource.
 
   ## Examples
+
       iex> GlassFactoryApi.ApiClient.get("members")
       {:ok , %{body: "[]", headers: [], status_code: 200}}
 

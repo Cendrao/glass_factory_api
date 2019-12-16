@@ -1,5 +1,7 @@
 # GlassFactoryApi
 
+[![Inline docs](https://inch-ci.org/github/Cendrao/glass_factory_api.svg)](http://inch-ci.org/github/Cendrao/glass_factory_api)
+
 [![CircleCI](https://circleci.com/gh/Cendrao/glass_factory_api.svg?style=svg)](https://circleci.com/gh/Cendrao/glass_factory_api)
 
 A client for [GlassFactory Public API](https://documenter.getpostman.com/view/4377973/RW8FDkDM?version=latest#intro) written in Elixir.

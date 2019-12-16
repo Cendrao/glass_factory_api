@@ -1,4 +1,5 @@
 version: 2
+
 jobs:
   build:
     docker:
@@ -12,6 +13,13 @@ jobs:
 
       - run: mix local.hex --force
       - run: mix local.rebar --force
+
       - run: mix deps.get
+
       - run: mix format --check-formatted
       - run: mix test
+
+      - run:
+          environment:
+            MIX_ENV: docs
+          command: mix inch report

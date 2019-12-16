@@ -11,26 +11,26 @@ defmodule GlassFactoryApi.Projects.Activities do
 
   ## Examples
 
-  iex> GlassFactoryApi.Projects.Activities.list_activities("1234")
-  {:ok,
-    [
-      %Activity{
-        id: 1122,
-        name: "General Time"
-      },
-      %Activity{
-        id: 1123,
-        name: "Mobile App"
-      },
-      %Activity{
-        id: 1124,
-        name: "Integrations"
+      iex> GlassFactoryApi.Projects.Activities.list_activities("1234")
+      {:ok,
+        [
+          %Activity{
+            id: 1122,
+            name: "General Time"
+          },
+          %Activity{
+            id: 1123,
+            name: "Mobile App"
+          },
+          %Activity{
+            id: 1124,
+            name: "Integrations"
+          }
+        ]
       }
-    ]
-  }
 
-  iex> GlassFactoryApi.Projects.Activities.list_activities("1")
-  {:error, "Can't find activities for project id 1"}
+      iex> GlassFactoryApi.Projects.Activities.list_activities("1")
+      {:error, "Can't find activities for project id 1"}
   """
   @spec list_activities(integer(), map) :: {atom(), [Activity.t()] | String.t()}
   def list_activities(project_id, config \\ %{}) do

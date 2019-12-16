@@ -22,10 +22,14 @@ defmodule GlassFactoryApi.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      # Runtime dependencies
       {:jason, "~> 1.1"},
-      {:ex_doc, "~> 0.21.2", only: :dev},
+      {:tesla, github: "teamon/tesla"},
+
+      # Testing & Docs
       {:bypass, "~> 1.0", only: :test},
-      {:tesla, github: "teamon/tesla"}
+      {:ex_doc, "~> 0.21.2", only: :dev, runtime: false},
+      {:inch_ex, "~> 2.0", only: :docs}
     ]
   end
 

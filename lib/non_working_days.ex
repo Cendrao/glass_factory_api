@@ -24,35 +24,35 @@ defmodule GlassFactoryApi.NonWorkingDays do
 
   ## Examples
 
-    iex> GlassFactoryApi.NonWorkingDays.get_non_working_days()
-    {
-      :ok,
-      [
-        %NonWorkingDay{
-          id: 102,
-          start_date: "2017-07-04",
-          end_date: "2017-07-04",
-          name: "Independence Day",
-          office_id: 101
-        },
-        %NonWorkingDay{
-          id: 103,
-          start_date: "2017-12-25",
-          end_date: "2017-12-25",
-          name: "Christmas Day",
-          office_id: 101
-        }
-      ]
-    }
+      iex> GlassFactoryApi.NonWorkingDays.get_non_working_days()
+      {
+        :ok,
+        [
+          %NonWorkingDay{
+            id: 102,
+            start_date: "2017-07-04",
+            end_date: "2017-07-04",
+            name: "Independence Day",
+            office_id: 101
+          },
+          %NonWorkingDay{
+            id: 103,
+            start_date: "2017-12-25",
+            end_date: "2017-12-25",
+            name: "Christmas Day",
+            office_id: 101
+          }
+        ]
+      }
 
-    iex> GlassFactoryApi.NonWorkingDays.get_non_working_days([start: '2019-10-01', '2019-10-31'])
-    {
-      :ok,
-      []
-    }
+      iex> GlassFactoryApi.NonWorkingDays.get_non_working_days([start: '2019-10-01', '2019-10-31'])
+      {
+        :ok,
+        []
+      }
 
-    iex> GlassFactoryApi.NonWorkingDays.get_non_working_days()
-    {:error, "econnrefused"}
+      iex> GlassFactoryApi.NonWorkingDays.get_non_working_days()
+      {:error, "econnrefused"}
   """
   @spec get_non_working_days(Keyword.t(), map()) :: {atom(), [NonWorkingDay.t() | String.t()]}
   def get_non_working_days(query \\ [], config \\ %{}) do

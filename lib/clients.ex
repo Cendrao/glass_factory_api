@@ -11,20 +11,19 @@ defmodule GlassFactoryApi.Clients do
 
   ## Examples
 
-  iex> GlassFactoryApi.Clients.get_client("1234")
-  {:ok,
-    %Client{
-      id: 1234,
-      name: "Google",
-      archived_at: null,
-      owner_id: 567,
-      office_id: 789
-    }
-  }
+      iex> GlassFactoryApi.Clients.get_client("1234")
+      {:ok,
+        %Client{
+          id: 1234,
+          name: "Google",
+          archived_at: null,
+          owner_id: 567,
+          office_id: 789
+        }
+      }
 
-
-  iex> GlassFactoryApi.Clients.get_client("1")
-  {:error, "Can't find a client with id 1"}
+      iex> GlassFactoryApi.Clients.get_client("1")
+      {:error, "Can't find a client with id 1"}
   """
   @spec get_client(integer(), map) :: {atom(), Client.t() | String.t()}
   def get_client(client_id, config \\ %{}) do
@@ -43,18 +42,18 @@ defmodule GlassFactoryApi.Clients do
 
   ## Examples
 
-  iex> GlassFactoryApi.Clients.get_client("1234")
-  %Client{
-    id: 1234,
-    name: "Google",
-    archived_at: null,
-    owner_id: 567,
-    office_id: 789
-  }
+      iex> GlassFactoryApi.Clients.get_client("1234")
+      %Client{
+        id: 1234,
+        name: "Google",
+        archived_at: null,
+        owner_id: 567,
+        office_id: 789
+      }
 
 
-  iex> GlassFactoryApi.Clients.get_client("1")
-  "Can't find a client with id 1"
+      iex> GlassFactoryApi.Clients.get_client("1")
+      "Can't find a client with id 1"
   """
   @spec get_client!(integer(), map) :: {Client.t()}
   def get_client!(client_id, config \\ %{}) do
@@ -71,28 +70,28 @@ defmodule GlassFactoryApi.Clients do
 
   ## Examples
 
-  iex> GlassFactoryApi.Clients.list_clients()
-  {:ok,
-    [
-      %Client{
-        id: 1234,
-        name: "Google",
-        archived_at: null,
-        owner_id: 567,
-        office_id: 789
-      },
-      %Client{
-        id: 1235,
-        name: "Facebook",
-        archived_at: null,
-        owner_id: 567,
-        office_id: 789
+      iex> GlassFactoryApi.Clients.list_clients()
+      {:ok,
+        [
+          %Client{
+            id: 1234,
+            name: "Google",
+            archived_at: null,
+            owner_id: 567,
+            office_id: 789
+          },
+          %Client{
+            id: 1235,
+            name: "Facebook",
+            archived_at: null,
+            owner_id: 567,
+            office_id: 789
+          }
+        ]
       }
-    ]
-  }
 
-  iex> GlassFactoryApi.Clients.list_clients()
-  {:error, "econnrefused"}
+      iex> GlassFactoryApi.Clients.list_clients()
+      {:error, "econnrefused"}
   """
 
   @spec list_clients(map()) :: {atom(), [Client.t()] | String.t()}
@@ -109,26 +108,26 @@ defmodule GlassFactoryApi.Clients do
 
   ## Examples
 
-    iex> GlassFactoryApi.Clients.list_clients!()
-    [
-      %Client{
-        id: 1234,
-        name: "Google",
-        archived_at: null,
-        owner_id: 567,
-        office_id: 789
-      },
-      %Client{
-        id: 1235,
-        name: "Facebook",
-        archived_at: null,
-        owner_id: 567,
-        office_id: 789
-      }
-    ]
+      iex> GlassFactoryApi.Clients.list_clients!()
+      [
+        %Client{
+          id: 1234,
+          name: "Google",
+          archived_at: null,
+          owner_id: 567,
+          office_id: 789
+        },
+        %Client{
+          id: 1235,
+          name: "Facebook",
+          archived_at: null,
+          owner_id: 567,
+          office_id: 789
+        }
+      ]
 
-    iex> GlassFactoryApi.Clients.list_clients!()
-    "econnrefused"
+      iex> GlassFactoryApi.Clients.list_clients!()
+      "econnrefused"
   """
 
   @spec list_clients!(map()) :: {[Client.t()]}
