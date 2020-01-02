@@ -126,4 +126,63 @@ defmodule GlassFactoryApi.Members do
       {:error, error} -> raise error
     end
   end
+
+  @doc """
+  Returns the active members from an organization.
+
+  ## Examples
+
+      iex> GlassFactoryApi.Members.list_active_members()
+      {:ok, [ %Member{
+            name: "John Doe",
+            email: "john.doe@example.org",
+            id: 0,
+            archived: false,
+            capacity: 8.0,
+            freelancer: false,
+            joined_at: "2019-01-01"
+          }
+        ]
+      }
+
+      iex> GlassFactoryApi.Members.list_members()
+      {:error, "econnrefused"}
+  """
+  @spec list_active_members(map()) :: {:ok, list(Member)} | {:error, any}
+  def list_active_members(config \\ %{}) do
+    with {:ok, %{status: 200, body: body}} <- ApiClient.get("members/active", config) do
+      {:ok, Enum.map(body, &Member.to_struct(&1))}
+    else
+      {:error, error} -> {:error, error}
+    end
+  end
+
+  @doc """
+  Returns the active members from an organization. It raises if something went wrong.
+
+  ## Examples
+
+      iex> GlassFactoryApi.Members.list_active_members!()
+      [ %Member{
+            name: "John Doe",
+            email: "john.doe@example.org",
+            id: 0,
+            archived: false,
+            capacity: 8.0,
+            freelancer: false,
+            joined_at: "2019-01-01"
+          }
+      ]
+
+      iex> GlassFactoryApi.Members.list_members!()
+      ** (RuntimeError) econnrefused
+  """
+  @spec list_active_members!(map()) :: list(Member)
+  def list_active_members!(config \\ %{}) do
+    with {:ok, active_members} <- list_active_members(config) do
+      active_members
+    else
+      {:error, error} -> raise error
+    end
+  end
 end
