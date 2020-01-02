@@ -131,12 +131,12 @@ defmodule GlassFactoryApi.MembersTest do
 
   describe "list_active_members/1" do
     test "returns a list of members", %{bypass: bypass, config: config} do
-      request_response = GlassFactoryApi.Fixtures.Members.list()
+      expected_response = GlassFactoryApi.Fixtures.Members.list()
 
       Bypass.expect_once(bypass, fn conn ->
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
-        |> Plug.Conn.resp(200, request_response)
+        |> Plug.Conn.resp(200, expected_response)
       end)
 
       assert {:ok,

@@ -148,7 +148,7 @@ defmodule GlassFactoryApi.Members do
       iex> GlassFactoryApi.Members.list_members()
       {:error, "econnrefused"}
   """
-  @spec list_active_members(map()) :: {atom, list(Member)}
+  @spec list_active_members(map()) :: {:ok, list(Member)} | {:error, any}
   def list_active_members(config \\ %{}) do
     with {:ok, %{status: 200, body: body}} <- ApiClient.get("members/active", config) do
       {:ok, Enum.map(body, &Member.to_struct(&1))}
