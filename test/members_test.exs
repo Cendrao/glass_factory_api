@@ -173,7 +173,13 @@ defmodule GlassFactoryApi.MembersTest do
                   capacity: 8.0,
                   email: "john.doe@example.org",
                   freelancer: false,
-                  joined_at: "2019-01-01"
+                  joined_at: "2019-01-01",
+                  avatar: %Avatar{
+                    url: "/default_avatar/user/2666.svg",
+                    medium: %{url: "/default_avatar/user/2666.svg"},
+                    small: %{url: "/default_avatar/user/2666.svg"},
+                    thumb: %{url: "/default_avatar/user/2666.svg"}
+                  }
                 }
               ]} == Members.list_active_members(config)
     end
@@ -197,7 +203,13 @@ defmodule GlassFactoryApi.MembersTest do
                  capacity: 8.0,
                  email: "john.doe@example.org",
                  freelancer: false,
-                 joined_at: "2019-01-01"
+                 joined_at: "2019-01-01",
+                 avatar: %Avatar{
+                   url: "/default_avatar/user/2666.svg",
+                   medium: %{url: "/default_avatar/user/2666.svg"},
+                   small: %{url: "/default_avatar/user/2666.svg"},
+                   thumb: %{url: "/default_avatar/user/2666.svg"}
+                 }
                }
              ] == Members.list_active_members!(config)
     end
