@@ -31,7 +31,7 @@ defmodule GlassFactoryApi.Members do
   @spec list_members(map()) :: {atom(), list(Member.t()) | String.t()}
   def list_members(config \\ %{}) do
     with {:ok, %{status: 200, body: body}} <- ApiClient.get("members", config) do
-      {:ok, Enum.map(body, &Member.to_struct(&1))}
+      {:ok, Enum.map(body, &Member.to_struct(&1, config))}
     else
       {:error, error} -> {:error, error}
     end
@@ -91,7 +91,7 @@ defmodule GlassFactoryApi.Members do
   @spec get_member(String.t(), map()) :: {atom(), Member.t() | String.t()}
   def get_member(member_id, config \\ %{}) do
     with {:ok, %{status: 200, body: body}} <- ApiClient.get("members/#{member_id}", config) do
-      {:ok, Member.to_struct(body)}
+      {:ok, Member.to_struct(body, config)}
     else
       {:ok, %{status: 404}} -> {:error, "Can't find a member with ID #{member_id}"}
       {:error, error} -> {:error, error}
@@ -151,7 +151,7 @@ defmodule GlassFactoryApi.Members do
   @spec list_active_members(map()) :: {:ok, list(Member)} | {:error, any}
   def list_active_members(config \\ %{}) do
     with {:ok, %{status: 200, body: body}} <- ApiClient.get("members/active", config) do
-      {:ok, Enum.map(body, &Member.to_struct(&1))}
+      {:ok, Enum.map(body, &Member.to_struct(&1, config))}
     else
       {:error, error} -> {:error, error}
     end

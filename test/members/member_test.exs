@@ -6,6 +6,8 @@ defmodule GlassFactoryApi.Members.MemberTest do
 
   describe "to_struct/1" do
     test "parses a map to a Member struct" do
+      config = %{api_url: "http://example.org/"}
+
       data_map = %{
         "name" => "John Doe",
         "id" => 10,
@@ -18,9 +20,9 @@ defmodule GlassFactoryApi.Members.MemberTest do
                id: 10,
                email: "john.doe@example.org",
                avatar: %Avatar{
-                 url: "/default_user/avatar/2632.svg"
+                 url: "http://example.org/default_user/avatar/2632.svg"
                }
-             } = Member.to_struct(data_map)
+             } = Member.to_struct(data_map, config)
     end
   end
 end

@@ -34,8 +34,8 @@ defmodule GlassFactoryApi.Members.Member do
         joined_at: "2019-01-01"
       }
   """
-  @spec to_struct(map()) :: __MODULE__.t()
-  def to_struct(attrs) do
+  @spec to_struct(map(), map()) :: __MODULE__.t()
+  def to_struct(attrs, config) do
     %__MODULE__{
       name: attrs["name"],
       id: attrs["id"],
@@ -44,7 +44,7 @@ defmodule GlassFactoryApi.Members.Member do
       capacity: attrs["capacity"],
       freelancer: attrs["freelancer"],
       joined_at: attrs["joined_at"],
-      avatar: Avatar.to_struct(attrs["avatar"])
+      avatar: Avatar.to_struct(attrs["avatar"], config)
     }
   end
 end

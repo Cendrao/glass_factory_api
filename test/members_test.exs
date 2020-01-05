@@ -39,10 +39,10 @@ defmodule GlassFactoryApi.MembersTest do
                   freelancer: false,
                   joined_at: "2019-01-01",
                   avatar: %Avatar{
-                    url: "/default_avatar/user/2666.svg",
-                    medium: %{url: "/default_avatar/user/2666.svg"},
-                    small: %{url: "/default_avatar/user/2666.svg"},
-                    thumb: %{url: "/default_avatar/user/2666.svg"}
+                    url: "#{config[:api_url]}/default_avatar/user/2666.svg",
+                    medium: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                    small: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                    thumb: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"}
                   }
                 }
               ]} == Members.list_members(config)
@@ -69,10 +69,10 @@ defmodule GlassFactoryApi.MembersTest do
                  freelancer: false,
                  joined_at: "2019-01-01",
                  avatar: %Avatar{
-                   url: "/default_avatar/user/2666.svg",
-                   medium: %{url: "/default_avatar/user/2666.svg"},
-                   small: %{url: "/default_avatar/user/2666.svg"},
-                   thumb: %{url: "/default_avatar/user/2666.svg"}
+                   url: "#{config[:api_url]}/default_avatar/user/2666.svg",
+                   medium: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                   small: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                   thumb: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"}
                  }
                }
              ] == Members.list_members!(config)
@@ -99,12 +99,12 @@ defmodule GlassFactoryApi.MembersTest do
                 freelancer: false,
                 joined_at: "2019-01-01",
                 avatar: %Avatar{
-                  url: "/default_avatar/user/2666.svg",
-                  medium: %{url: "/default_avatar/user/2666.svg"},
-                  small: %{url: "/default_avatar/user/2666.svg"},
-                  thumb: %{url: "/default_avatar/user/2666.svg"}
+                  url: "#{config[:api_url]}/default_avatar/user/2666.svg",
+                  medium: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                  small: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                  thumb: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"}
                 }
-              }} = Members.get_member(2666, config)
+              }} == Members.get_member(2666, config)
     end
 
     test "returns nil when the id does not exist", %{bypass: bypass, config: config} do
@@ -135,12 +135,12 @@ defmodule GlassFactoryApi.MembersTest do
                freelancer: false,
                joined_at: "2019-01-01",
                avatar: %Avatar{
-                 url: "/default_avatar/user/2666.svg",
-                 medium: %{url: "/default_avatar/user/2666.svg"},
-                 small: %{url: "/default_avatar/user/2666.svg"},
-                 thumb: %{url: "/default_avatar/user/2666.svg"}
+                 url: "#{config[:api_url]}/default_avatar/user/2666.svg",
+                 medium: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                 small: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                 thumb: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"}
                }
-             } = Members.get_member!(2666, config)
+             } == Members.get_member!(2666, config)
     end
 
     test "returns nil when the id does not exist", %{bypass: bypass, config: config} do
@@ -175,10 +175,10 @@ defmodule GlassFactoryApi.MembersTest do
                   freelancer: false,
                   joined_at: "2019-01-01",
                   avatar: %Avatar{
-                    url: "/default_avatar/user/2666.svg",
-                    medium: %{url: "/default_avatar/user/2666.svg"},
-                    small: %{url: "/default_avatar/user/2666.svg"},
-                    thumb: %{url: "/default_avatar/user/2666.svg"}
+                    url: "#{config[:api_url]}/default_avatar/user/2666.svg",
+                    medium: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                    small: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                    thumb: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"}
                   }
                 }
               ]} == Members.list_active_members(config)
@@ -205,10 +205,10 @@ defmodule GlassFactoryApi.MembersTest do
                  freelancer: false,
                  joined_at: "2019-01-01",
                  avatar: %Avatar{
-                   url: "/default_avatar/user/2666.svg",
-                   medium: %{url: "/default_avatar/user/2666.svg"},
-                   small: %{url: "/default_avatar/user/2666.svg"},
-                   thumb: %{url: "/default_avatar/user/2666.svg"}
+                   url: "#{config[:api_url]}/default_avatar/user/2666.svg",
+                   medium: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                   small: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                   thumb: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"}
                  }
                }
              ] == Members.list_active_members!(config)
