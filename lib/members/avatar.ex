@@ -8,7 +8,7 @@ defmodule GlassFactoryApi.Members.Avatar do
 
   defstruct [:url, :medium, :small, :thumb]
 
-  @spec to_struct(map()) :: __MODULE__.t()
+  @spec to_struct(map()) :: t()
   def to_struct(attrs) do
     %__MODULE__{
       url: Map.fetch!(attrs, "url"),
