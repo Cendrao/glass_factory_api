@@ -5,7 +5,12 @@ defmodule GlassFactoryApi.Members.AvatarTest do
 
   describe "to_struct/1" do
     test "returns an avatar struct" do
-      config = %{api_url: "http://example.org/"}
+      config = %{
+        api_url: "http://example.org/",
+        subdomain: "example",
+        user_token: "test_user_token",
+        user_email: "foo@example.org"
+      }
 
       data_map = %{
         "url" => "http://example.org/user/1/avatar.jpeg",
@@ -23,7 +28,12 @@ defmodule GlassFactoryApi.Members.AvatarTest do
     end
 
     test "when the api does not send a full URL it normalizes it" do
-      config = %{api_url: "http://example.org/"}
+      config = %{
+        api_url: "http://example.org/",
+        subdomain: "example",
+        user_token: "test_user_token",
+        user_email: "foo@example.org"
+      }
 
       data_map = %{
         "url" => "/user/1/avatar.jpeg",
