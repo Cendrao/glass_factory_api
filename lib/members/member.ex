@@ -1,4 +1,6 @@
 defmodule GlassFactoryApi.Members.Member do
+  alias GlassFactoryApi.Members.Avatar
+
   @moduledoc """
   Defines the Member of organization.
   """
@@ -10,10 +12,11 @@ defmodule GlassFactoryApi.Members.Member do
           archived: boolean(),
           capacity: non_neg_integer(),
           freelancer: boolean(),
-          joined_at: String.t()
+          joined_at: String.t(),
+          avatar: Avatar.t()
         }
 
-  defstruct [:name, :email, :id, :archived, :capacity, :freelancer, :joined_at]
+  defstruct [:name, :email, :id, :archived, :capacity, :freelancer, :joined_at, :avatar]
 
   @doc """
   Parse a map into a Member struct
@@ -31,8 +34,8 @@ defmodule GlassFactoryApi.Members.Member do
         joined_at: "2019-01-01"
       }
   """
-  @spec to_struct(map()) :: __MODULE__.t()
-  def to_struct(attrs) do
+  @spec to_struct(map(), map()) :: __MODULE__.t()
+  def to_struct(attrs, config) do
     %__MODULE__{
       name: attrs["name"],
       id: attrs["id"],
@@ -40,7 +43,8 @@ defmodule GlassFactoryApi.Members.Member do
       archived: attrs["archived"],
       capacity: attrs["capacity"],
       freelancer: attrs["freelancer"],
-      joined_at: attrs["joined_at"]
+      joined_at: attrs["joined_at"],
+      avatar: Avatar.to_struct(attrs["avatar"], config)
     }
   end
 end

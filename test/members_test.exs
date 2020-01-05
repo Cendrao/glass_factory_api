@@ -2,6 +2,7 @@ defmodule GlassFactoryApi.MembersTest do
   use ExUnit.Case, async: true
 
   alias GlassFactoryApi.Members
+  alias GlassFactoryApi.Members.Avatar
   alias GlassFactoryApi.Members.Member
 
   setup do
@@ -36,7 +37,13 @@ defmodule GlassFactoryApi.MembersTest do
                   capacity: 8.0,
                   email: "john.doe@example.org",
                   freelancer: false,
-                  joined_at: "2019-01-01"
+                  joined_at: "2019-01-01",
+                  avatar: %Avatar{
+                    url: "#{config[:api_url]}/default_avatar/user/2666.svg",
+                    medium: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                    small: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                    thumb: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"}
+                  }
                 }
               ]} == Members.list_members(config)
     end
@@ -60,7 +67,13 @@ defmodule GlassFactoryApi.MembersTest do
                  capacity: 8.0,
                  email: "john.doe@example.org",
                  freelancer: false,
-                 joined_at: "2019-01-01"
+                 joined_at: "2019-01-01",
+                 avatar: %Avatar{
+                   url: "#{config[:api_url]}/default_avatar/user/2666.svg",
+                   medium: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                   small: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                   thumb: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"}
+                 }
                }
              ] == Members.list_members!(config)
     end
@@ -84,8 +97,14 @@ defmodule GlassFactoryApi.MembersTest do
                 capacity: 8.0,
                 email: "john.doe@example.org",
                 freelancer: false,
-                joined_at: "2019-01-01"
-              }} = Members.get_member(2666, config)
+                joined_at: "2019-01-01",
+                avatar: %Avatar{
+                  url: "#{config[:api_url]}/default_avatar/user/2666.svg",
+                  medium: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                  small: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                  thumb: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"}
+                }
+              }} == Members.get_member(2666, config)
     end
 
     test "returns nil when the id does not exist", %{bypass: bypass, config: config} do
@@ -114,8 +133,14 @@ defmodule GlassFactoryApi.MembersTest do
                capacity: 8.0,
                email: "john.doe@example.org",
                freelancer: false,
-               joined_at: "2019-01-01"
-             } = Members.get_member!(2666, config)
+               joined_at: "2019-01-01",
+               avatar: %Avatar{
+                 url: "#{config[:api_url]}/default_avatar/user/2666.svg",
+                 medium: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                 small: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                 thumb: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"}
+               }
+             } == Members.get_member!(2666, config)
     end
 
     test "returns nil when the id does not exist", %{bypass: bypass, config: config} do
@@ -148,7 +173,13 @@ defmodule GlassFactoryApi.MembersTest do
                   capacity: 8.0,
                   email: "john.doe@example.org",
                   freelancer: false,
-                  joined_at: "2019-01-01"
+                  joined_at: "2019-01-01",
+                  avatar: %Avatar{
+                    url: "#{config[:api_url]}/default_avatar/user/2666.svg",
+                    medium: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                    small: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                    thumb: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"}
+                  }
                 }
               ]} == Members.list_active_members(config)
     end
@@ -172,7 +203,13 @@ defmodule GlassFactoryApi.MembersTest do
                  capacity: 8.0,
                  email: "john.doe@example.org",
                  freelancer: false,
-                 joined_at: "2019-01-01"
+                 joined_at: "2019-01-01",
+                 avatar: %Avatar{
+                   url: "#{config[:api_url]}/default_avatar/user/2666.svg",
+                   medium: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                   small: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"},
+                   thumb: %{url: "#{config[:api_url]}/default_avatar/user/2666.svg"}
+                 }
                }
              ] == Members.list_active_members!(config)
     end
